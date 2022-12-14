@@ -1,37 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jwt-simple");
-const passport = require("../config/passport.js");
-const config = require("../config/config.js");
-const User = require("../models/userSchema.js");
+const { User, validate } = require("../models/userSchema.js");
+const bcrypt = require("bcrypt");
 
-router.post("/signup", (req, res) => {
-  if (req.body.email && req.body.password) {
-    let newUser = {
-      email: req.body.email,
-      password: req.body.password,
-    };
-    User.findOne({ email: req.body.email }).then((user) => {
-      if (!user) {
-        User.create(newUser).then((user) => {
-          if (user) {
-            const payload = {
-              id: newUser.id,
-            };
-            const token = jwt.encode(payload, config.jwtSecret);
-            res.json({
-              token: token,
-            });
-          } else {
-            res.sendStatus(401);
-          }
-        });
-      } else {
-        res.sendStatus(401);
-      }
-    });
-  } else {
-    res.sendStatus(401);
+router.post("/", async (req, res) => {
+  try {
+    const { error } = validate(req.body);
+    if (error)
+      return res.status(400).json({ message: error.details[0].message });
+
+    const user = await User.findOne({ email: req.body.email });
+    if (user)
+      return res
+        .status(409)
+        .json({ message: "User with given email already exist!" });
+
+    const salt = await bcrypt.genSalt(Number(process.env.SALT));
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
+
+    await new User({ ...req.body, password: hashPassword }).save();
+    res.status(201).json({ message: "User account created successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

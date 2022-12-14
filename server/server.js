@@ -1,10 +1,10 @@
 require("dotenv").config();
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const userController = require("./controllers/userController.js");
-const passport = require("./config/passport")();
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -17,10 +17,10 @@ mongoose.set("strictQuery", false);
 mongoose.connect(MONGO_URI);
 
 app.use(express.json());
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.static("../client/dist"));
-app.use("/", userController);
-app.use(passport.initialize());
+app.use("/api/signup", userController);
 
 app.get("/api", (req, res) => {
   res.json({ msg: "Hello World!" });
