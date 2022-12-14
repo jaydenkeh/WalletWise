@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 import HomePage from "./pages/HomePage";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<SignupPage />} />
           <Route path="/home" element={<HomePage />} />
           {/* <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} /> */}
