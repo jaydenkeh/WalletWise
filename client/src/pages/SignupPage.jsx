@@ -18,7 +18,7 @@ export default function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:3000/api/signup";
+      const url = "http://beautiful-lion-gown.cyclic.app/api/signup";
       const { data: res } = await axios.post(url, data);
       navigate("/login");
       console.log(res.message);
@@ -63,7 +63,7 @@ export default function SignupPage() {
             required
           />
           {error && <div className="signup-error-message">{error}</div>}
-          <button type="submit">Sing Up</button>
+          <button type="submit">Sign Up</button>
         </form>
       </div>
     </>
