@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
 import SignupPage from "./pages/SignupPage";
 import HomePage from "./pages/HomePage";
+import IncomePage from "./pages/IncomePage";
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
           <ul>
             <li>
               <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/income">Income</Link>
             </li>
             {/* <li>
               <Link to="/about">About</Link>
@@ -25,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SignupPage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/income" element={<IncomePage />} />
           {/* <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} /> */}
         </Routes>
