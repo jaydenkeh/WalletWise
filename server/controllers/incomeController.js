@@ -3,6 +3,15 @@ const Income = require("../models/Income");
 
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  try {
+    const income = await Income.find().exec();
+    res.json(income);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const income = await Income.create(req.body);
