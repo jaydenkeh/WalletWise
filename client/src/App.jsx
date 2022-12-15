@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import IncomePage from "./pages/IncomePage";
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
           <ul>
             <li>
               <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/income">Income</Link>
             </li>
             {/* <li>
               <Link to="/about">About</Link>
@@ -23,6 +27,7 @@ function App() {
         </nav>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/income" element={<IncomePage />} />
           {/* <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} /> */}
         </Routes>

@@ -3,6 +3,8 @@ const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const Income = require("./models/Income.js");
+const incomeController = require("./controllers/incomeController.js");
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -17,6 +19,8 @@ mongoose.connect(MONGO_URI);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static("../client/dist"));
+
+app.use("/api/income", incomeController);
 
 app.get("/api", (req, res) => {
   res.json({ msg: "Hello World!" });
