@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
+import SignupPage from "./pages/SignupPage";
 import HomePage from "./pages/HomePage";
 import IncomePage from "./pages/IncomePage";
 
@@ -12,7 +13,7 @@ function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
             </li>
             <li>
               <Link to="/income">Income</Link>
@@ -26,7 +27,8 @@ function App() {
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<SignupPage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/income" element={<IncomePage />} />
           {/* <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} /> */}
