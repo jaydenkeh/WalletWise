@@ -1,15 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function SignupPage() {
-  const [data, setData] = useState({
-    userName: "",
-    email: "",
-    password: "",
-  });
+export default function LoginPage() {
+  const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -18,10 +13,11 @@ export default function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "https://beautiful-lion-gown.cyclic.app/api/signup";
-      // const url = "http://localhost:3000/api/signup";
+      const url = "https://beautiful-lion-gown.cyclic.app/api/login";
+      // const url = "http://localhost:3000/api/login";
       const { data: res } = await axios.post(url, data);
-      navigate("/home");
+      localStorage.setItem("token", res.data);
+      window.location = "/home";
     } catch (error) {
       if (
         error.response &&
@@ -34,18 +30,10 @@ export default function SignupPage() {
   };
 
   return (
-    <>
-      <div className="signup-container">
+    <div className="login-container">
+      <div className="login-form-container">
         <form onSubmit={handleSubmit}>
-          <h1>Create Account</h1>
-          <input
-            type="text"
-            placeholder="User Name"
-            name="userName"
-            onChange={handleChange}
-            value={data.userName}
-            required
-          />
+          <h1>Login to Your Account</h1>
           <input
             type="email"
             placeholder="Email"
@@ -62,18 +50,18 @@ export default function SignupPage() {
             value={data.password}
             required
           />
-          {error && <div className="signup-error-message">{error}</div>}
-          <button type="submit">Sign Up</button>
+          {error && <div className="login-error-message">{error}</div>}
+          <button type="submit">Sign In</button>
         </form>
+        <div className="new-signup-message">
+          <p>
+            New here?
+            <Link to="/">
+              <button type="button">Sign Up Now</button>
+            </Link>
+          </p>
+        </div>
       </div>
-      <div className="login-message">
-        <p>
-          Already an existing user?
-          <Link to="/login">
-            <span> Log back in</span>
-          </Link>
-        </p>
-      </div>
-    </>
+    </div>
   );
 }

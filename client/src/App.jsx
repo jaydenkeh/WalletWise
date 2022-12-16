@@ -1,40 +1,22 @@
 import { useState } from "react";
 import "./App.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import IncomePage from "./pages/IncomePage";
 
 function App() {
+  const user = localStorage.getItem("token");
+
   return (
-    <Router>
-      <div className="navigation-bar">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/home">Home</Link>
-            </li>
-            <li>
-              <Link to="/income">Income</Link>
-            </li>
-            {/* <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li> */}
-          </ul>
-        </nav>
-        <Routes>
-          <Route path="/" element={<SignupPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/income" element={<IncomePage />} />
-          {/* <Route path="/about" component={About} />
-        <Route path="/contact" component={Contact} /> */}
-        </Routes>
-      </div>
-    </Router>
+    <Routes>
+      <Route path="/" element={<SignupPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      {user && <Route path="/home" element={<HomePage />} />}
+      <Route path="/home" element={<Navigate replace to="/login" />} />
+      <Route path="/income" element={<IncomePage />} />
+    </Routes>
   );
 }
 
