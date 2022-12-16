@@ -12,6 +12,28 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.route("/total").get(function (req, res) {
+  Income.aggregate(
+    [
+      {
+        $group: {
+          _id: "$account",
+          total: {
+            $sum: "$amount",
+          },
+        },
+      },
+    ],
+    function (err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+});
+
 router.post("/", async (req, res) => {
   try {
     const income = await Income.create(req.body);
