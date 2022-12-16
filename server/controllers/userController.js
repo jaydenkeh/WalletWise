@@ -6,15 +6,15 @@ const bcrypt = require("bcrypt");
 router.post("/", async (req, res) => {
   try {
     const { error } = validate(req.body);
-    if (error)
+    if (error) {
       return res.status(400).json({ message: error.details[0].message });
-
+    }
     const user = await User.findOne({ email: req.body.email });
-    if (user)
+    if (user) {
       return res
         .status(409)
         .json({ message: "User with given email already exist!" });
-
+    }
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 

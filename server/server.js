@@ -5,6 +5,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const userController = require("./controllers/userController.js");
+const loginController = require("./controllers/loginController.js");
 const Income = require("./models/Income.js");
 const incomeController = require("./controllers/incomeController.js");
 
@@ -23,7 +24,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.static("../client/dist"));
 app.use("/api/signup", userController);
-
+app.use("/api/login", loginController);
 app.use("/api/income", incomeController);
 
 app.get("/api", (req, res) => {
