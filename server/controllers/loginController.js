@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { User } = require("../models/userSchema.js");
+const { User } = require("../models/signupSchema.js");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
+const checkAuth = require("../middleware/checkAuth.js");
 
 router.post("/", async (req, res) => {
   try {
@@ -29,6 +30,18 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
+});
+
+router.get("/me", checkAuth, async (req, res) => {
+  const user = await User.findOne({ _id: req.user });
+  return res.json({
+    data: {
+      user: {
+        id: user._id,
+        email: user.email,
+      },
+    },
+  });
 });
 
 const validate = (data) => {

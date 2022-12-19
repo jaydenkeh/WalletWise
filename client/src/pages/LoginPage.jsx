@@ -13,8 +13,8 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "https://beautiful-lion-gown.cyclic.app/api/login";
-      // const url = "http://localhost:3000/api/login";
+      // const url = "https://beautiful-lion-gown.cyclic.app/api/login";
+      const url = "http://localhost:3000/api/login/";
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data);
       window.location = "/home";
@@ -56,7 +56,7 @@ export default function LoginPage() {
         <div className="new-signup-message">
           <p>
             New here?
-            <Link to="/">
+            <Link to="/signup">
               <button type="button">Sign Up Now</button>
             </Link>
           </p>

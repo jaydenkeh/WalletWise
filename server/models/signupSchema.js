@@ -8,11 +8,12 @@ const userSchema = new Schema({
   userName: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  account: [{ type: Schema.Types.ObjectId, ref: "Account" }],
 });
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
-    expiresIn: "3d",
+    expiresIn: "1d",
   });
   return token;
 };

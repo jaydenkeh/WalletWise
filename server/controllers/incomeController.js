@@ -1,5 +1,5 @@
 const express = require("express");
-const Income = require("../models/Income");
+const Income = require("../models/incomeSchema.js");
 
 const router = express.Router();
 
