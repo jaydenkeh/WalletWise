@@ -14,10 +14,10 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/home" element={<HomePage />} />
         <Route path="/income" element={<IncomePage />} />
-        {/* <Route path="/transaction-history" element={< />} /> */} //TODO Add
-        in route element
-        {/* <Route path="/accounts-overview" element={< />} /> */} //TODO Add in
-        route element
+        {/* <Route path="/transaction-history" element={< />} /> */}
+        //TODO Add in route element
+        {/* <Route path="/accounts-overview" element={< />} /> */}
+        //TODO Add in route element
       </Route>
     </Routes>
   );
