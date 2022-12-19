@@ -28,31 +28,36 @@ export default function HomePage() {
       <NavigationBar />
       {userinfo.id && (
         <div className="home-page">
-          HomePage
-          <PieChart width={400} height={400}>
-            <Pie
-              dataKey="value"
-              data={data01}
-              cx={200}
-              cy={200}
-              outerRadius={120}
-              fill="#8884d8"
-              label
-            />
-            <Tooltip />
-          </PieChart>
-          <PieChart width={400} height={400}>
-            <Pie
-              dataKey="value"
-              data={data01}
-              cx={200}
-              cy={200}
-              outerRadius={120}
-              fill="#f0a911"
-              label
-            />
-            <Tooltip />
-          </PieChart>
+          <div className="income-wrapper">
+            <h3>Income</h3>
+            <PieChart width={400} height={400}>
+              <Pie
+                dataKey="value"
+                data={data01}
+                cx={200}
+                cy={200}
+                outerRadius={120}
+                fill="#8884d8"
+                label
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+          <div className="expenses-wrapper">
+            <h3>Expenses</h3>
+            <PieChart width={400} height={400}>
+              <Pie
+                dataKey="value"
+                data={data01}
+                cx={200}
+                cy={200}
+                outerRadius={120}
+                fill="#f0a911"
+                label
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
           <button onClick={handleLogout}>Logout</button>
         </div>
       )}

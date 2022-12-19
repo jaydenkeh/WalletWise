@@ -34,3 +34,15 @@ a {
   color: white;
   text-decoration: none;
 }
+
+.home-page {
+  display: flex;
+}
+
+.income-wrapper {
+  flex-basis: 50%;
+}
+
+.expenses-wrapper {
+  flex-basis: 50%;
+}
