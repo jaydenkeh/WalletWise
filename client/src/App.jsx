@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import IncomePage from "./pages/IncomePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -42,9 +43,10 @@ function App() {
     <Routes>
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/" element={<LoginPage />} />
-      {user && <Route path="/home" element={<HomePage />} />}
-      <Route path="/home" element={<Navigate replace to="/" />} />
-      <Route path="/income" element={<IncomePage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/income" element={<IncomePage />} />
+      </Route>
     </Routes>
   );
 }
