@@ -10,7 +10,10 @@ export default function NavigationBar() {
             <Link to="/home">Home</Link>
           </li>
           <li>
-            <Link to="/income">Income</Link>
+            <Link to="/transactions-history">Transactions History</Link>
+          </li>
+          <li>
+            <Link to="/accounts-overview">Accounts Overview</Link>
           </li>
         </ul>
       </nav>
