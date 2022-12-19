@@ -1,18 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import NavigationBar from "../components/NavigationBar";
 import { UserAuth } from "../context/AuthContext";
+import NavigationBar from "../components/NavigationBar";
 import { PieChart, Pie, Legend, Tooltip } from "recharts";
 
 export default function HomePage() {
-  const navigate = useNavigate();
   const [userinfo, setUserInfo] = UserAuth();
-
-  const handleLogout = () => {
-    setUserInfo({ email: null, id: null, loading: false });
-    localStorage.removeItem("token");
-    navigate("/");
-  };
 
   const data01 = [
     { name: "Group A", value: 400 },
@@ -58,7 +50,6 @@ export default function HomePage() {
               <Tooltip />
             </PieChart>
           </div>
-          <button onClick={handleLogout}>Logout</button>
         </div>
       )}
     </>
