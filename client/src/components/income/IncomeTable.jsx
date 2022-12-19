@@ -2,6 +2,19 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function IncomeTable({ entries, setEntries }) {
+  const handleDelete = (id) => {
+    fetch(`/api/income/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setEntries(entries.filter((ele) => ele._id !== id));
+      });
+  };
+
   return (
     <>
       <table border="1" cellSpacing="0">
@@ -23,6 +36,17 @@ function IncomeTable({ entries, setEntries }) {
               <td>{entries.amount}</td>
               <td>{entries.description}</td>
               <td>{entries.date}</td>
+              {/* https://devexpress.github.io/devextreme-reactive/react/grid/docs/guides/editing-in-popup/ */}
+              <td>
+                <Link to={`/income/${entries._id}`}>
+                  <button>Edit</button>
+                </Link>
+              </td>
+              <td>
+                <button onClick={() => handleDelete(entries._id)}>
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

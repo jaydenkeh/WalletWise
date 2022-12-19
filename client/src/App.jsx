@@ -6,6 +6,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import IncomePage from "./pages/IncomePage";
+import EditEntriesPage from "./pages/EditEntriesPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/home" element={<HomePage />} />
         <Route path="/income" element={<IncomePage />} />
+        <Route path="/income/:id" element={<EditEntriesPage />} />
       </Route>
     </Routes>
   );
