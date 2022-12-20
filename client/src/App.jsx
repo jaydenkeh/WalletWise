@@ -8,6 +8,7 @@ import AccountsPage from "./pages/AccountsPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import EditEntriesPage from "./pages/EditEntriesPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useState } from "react";
 
 function App() {
   return (
