@@ -11,14 +11,16 @@ import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 
 function AccountsPage() {
-  const [entries, setEntries] = useState([]);
+  const [useraccounts, setUserAccounts] = useState([]);
   const [userinfo, setUserInfo] = UserAuth();
 
-  // useEffect(() => {
-  //   fetch("/api/income/")
-  //     .then((response) => response.json())
-  //     .then((data) => setEntries(data));
-  // }, []);
+  useEffect(() => {
+    fetch("/api/account/")
+      .then((response) => response.json())
+      .then((data) => setUserAccounts(data));
+  }, []);
+
+  console.log(useraccounts);
 
   const heights = [150, 30, 90, 70, 90, 100, 150, 30, 50, 80];
 
