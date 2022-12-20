@@ -11,9 +11,9 @@ const accountSchema = new Schema(
       trim: true,
     },
     accountDescription: { type: String, required: true, trim: true },
-    accountBalance: { type: Number, required: true, min: "0" },
-    currency: { type: String, required: true },
-    bankAccount: { type: String, required: true },
+    // accountBalance: { type: Number, required: true, min: "0" },
+    // currency: { type: String, required: true },
+    // bankAccount: { type: String, required: true },
   },
   { timestamps: true }
 );

@@ -12,6 +12,8 @@ function AddEntryForm({ entries, setEntries }) {
   let date = year + "-" + month + "-" + day;
 
   const [state, setState] = useState({
+    //get username from login auth state
+    userName: "admin",
     account: "",
     type: "salary",
     amount: "",

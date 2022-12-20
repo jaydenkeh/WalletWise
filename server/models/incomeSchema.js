@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const incomeSchema = mongoose.Schema(
   {
+    userName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     account: {
       type: String,
       required: true,
