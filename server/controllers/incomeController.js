@@ -1,5 +1,6 @@
 const express = require("express");
 const Income = require("../models/incomeSchema.js");
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -12,27 +13,57 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.route("/total").get(function (req, res) {
-  Income.aggregate(
-    [
-      {
-        $group: {
-          _id: "$account",
-          total: {
-            $sum: "$amount",
+router.get("/total", async (req, res) => {
+  try {
+    Income.aggregate(
+      [
+        //get userName from jwt token payload
+        { $match: { userName: "test" } },
+        {
+          $group: {
+            _id: "$type",
+            total: {
+              $sum: "$amount",
+            },
           },
         },
-      },
-    ],
-    function (err, result) {
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(result);
+      ],
+      function (err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.json(result);
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 });
+
+// router.route("/total").get(function (req, res) {
+//   Income.aggregate(
+//     [
+//       //get userName from jwt token payload
+//       { $match: { userName: "admin" } },
+//       {
+//         $group: {
+//           _id: "$account",
+//           total: {
+//             $sum: "$amount",
+//           },
+//         },
+//       },
+//     ],
+//     function (err, result) {
+//       if (err) {
+//         res.send(err);
+//       } else {
+//         res.json(result);
+//       }
+//     }
+//   );
+// });
 
 router.post("/", async (req, res) => {
   try {
