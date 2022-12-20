@@ -17,9 +17,9 @@ function App() {
         <Route path="/income" element={<IncomePage />} />
         <Route path="/income/:id" element={<EditEntriesPage />} />
         {/* <Route path="/transaction-history" element={< />} /> */}
-        //TODO Add in route element
+        {/* Add in route element */}
         {/* <Route path="/accounts-overview" element={< />} /> */}
-        //TODO Add in route element
+        {/* Add in route element */}
       </Route>
     </Routes>
   );

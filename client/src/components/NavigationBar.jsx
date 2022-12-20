@@ -20,10 +20,10 @@ export default function NavigationBar() {
             <Link to="/home">Home</Link>
           </li>
           <li>
-            <Link to="/transactions-history">Transactions History</Link>
+            <Link to="/accounts-overview">Accounts Overview</Link>
           </li>
           <li>
-            <Link to="/accounts-overview">Accounts Overview</Link>
+            <Link to="/transactions-history">Transactions History</Link>
           </li>
           <li>
             <button onClick={handleLogout}>Logout</button>
