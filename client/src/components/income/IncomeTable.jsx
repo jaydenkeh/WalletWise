@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 function IncomeTable({ entries, setEntries }) {
   const handleDelete = (id) => {
-    fetch(`/api/income/${id}`, {
-      method: "DELETE",
+    fetch(`/api/income/total`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
