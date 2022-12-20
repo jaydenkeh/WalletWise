@@ -46,3 +46,7 @@ a {
 .expenses-wrapper {
   flex-basis: 50%;
 }
+
+.all-accounts-container {
+  margin: 25px;
+}
