@@ -18,7 +18,7 @@ function IncomeTable({ entries, setEntries }) {
   return (
     <>
       <table border="1" cellSpacing="0">
-        <caption>Incomes</caption>
+        <caption>Transactions</caption>
         <thead>
           <tr>
             <th>Account</th>

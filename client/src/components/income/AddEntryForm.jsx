@@ -11,15 +11,31 @@ function AddEntryForm({ entries, setEntries }) {
   day = day < 10 ? "0" + day : day;
   let date = year + "-" + month + "-" + day;
 
-  const [state, setState] = useState({
-    //get username from login auth state
-    userName: "admin",
-    account: "",
-    type: "salary",
-    amount: "",
-    description: "",
-    date: date,
-  });
+  let toggle = "income";
+
+  if (toggle === "income") {
+    const [state, setState] = useState({
+      //get username from login auth state
+      userName: "admin",
+      account: "",
+      category: toggle,
+      type: "salary",
+      amount: "",
+      description: "",
+      date: date,
+    });
+  } else {
+    const [state, setState] = useState({
+      //get username from login auth state
+      userName: "admin",
+      account: "",
+      category: toggle,
+      type: "food",
+      amount: "",
+      description: "",
+      date: date,
+    });
+  }
 
   function handleChange(event) {
     const value = event.target.value;
@@ -69,7 +85,9 @@ function AddEntryForm({ entries, setEntries }) {
     <>
       {/* <form onSubmit={handleSubmit}> */}
       <fieldset>
-        <legend>New Income Entry</legend>
+        <legend>New Transaction Entry</legend>
+        <label>Toggle for income/expense</label>
+        <br />
         <label>
           Account:
           {/* change input to drop down with map + account storage in mongo */}

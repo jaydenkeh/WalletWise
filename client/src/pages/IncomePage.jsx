@@ -18,7 +18,7 @@ function IncomePage() {
   return (
     <>
       <NavigationBar />
-      <div>Income Page</div>
+      <div> Page</div>
       <TotalIncomeTable />
       <AddEntryForm entries={entries} setEntries={setEntries} />
       <IncomeTable entries={entries} setEntries={setEntries} />

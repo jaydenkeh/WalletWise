@@ -2,7 +2,7 @@ import React from "react";
 import { UserAuth } from "../context/AuthContext";
 import NavigationBar from "../components/NavigationBar";
 import TotalIncomeTable from "../components/income/TotalIncomeTable";
-import AddAccountForm from "../components/income/AddAccountForm";
+import AddEntryForm from "../components/income/AddEntryForm";
 import { PieChart, Pie, Legend, Tooltip } from "recharts";
 
 export default function HomePage() {
@@ -58,7 +58,7 @@ export default function HomePage() {
           </div>
           <TotalIncomeTable />
           <br />
-          <AddAccountForm />
+          <AddEntryForm />
         </>
       )}
     </>

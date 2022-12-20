@@ -12,6 +12,7 @@ const incomeSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    category: { type: String, required: true, trim: true },
     type: { type: String, required: true, trim: true },
     amount: { type: Number, required: true, min: "0" },
     description: { type: String, trim: true },
