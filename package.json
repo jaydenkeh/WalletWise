@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/jaydenkeh/WalletWise/issues"
   },
-  "homepage": "https://github.com/jaydenkeh/WalletWise#readme"
+  "homepage": "https://github.com/jaydenkeh/WalletWise#readme",
+  "dependencies": {
+    "recharts": "^2.2.0"
+  }
 }
