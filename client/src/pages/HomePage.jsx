@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import NavigationBar from "../components/NavigationBar";
 import TotalIncomeTable from "../components/income/TotalIncomeTable";
@@ -7,15 +7,28 @@ import { PieChart, Pie, Legend, Tooltip } from "recharts";
 
 export default function HomePage() {
   const [userinfo, setUserInfo] = UserAuth();
+  const [account, setAccount] = useState([]);
 
-  const data01 = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-    { name: "Group D", value: 200 },
-    { name: "Group E", value: 278 },
-    { name: "Group F", value: 189 },
-  ];
+  // const data01 = [
+  //   { name: "Group A", value: 400 },
+  //   { name: "Group B", value: 300 },
+  //   { name: "Group C", value: 300 },
+  //   { name: "Group D", value: 200 },
+  //   { name: "Group E", value: 278 },
+  //   { name: "Group F", value: 189 },
+  // ];
+
+  useEffect(() => {
+    fetch("/api/income/total")
+      .then((response) => response.json())
+      .then((data) => setAccount(data));
+  }, []);
+
+  const data01 = account.map(({ _id: name, total: value }) => ({
+    name,
+    value,
+  }));
+  console.log(data01);
 
   return (
     <>
