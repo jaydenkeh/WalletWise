@@ -21,7 +21,12 @@ export default function HomePage() {
   useEffect(() => {
     fetch("/api/income/total")
       .then((response) => response.json())
-      .then((data) => setAccount(data));
+      .then((data) => {
+        for (let i = 0; i < data.length; i++) {
+          data[i].total = data[i].total / 100;
+        }
+        setAccount(data);
+      });
   }, []);
 
   const data01 = account.map(({ _id: name, total: value }) => ({
