@@ -2,13 +2,13 @@ import * as React from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-export default function Toggle({ state, setState }) {
+export default function Toggle({ transactionInfo, setTransactionInfo }) {
   const [alignment, setAlignment] = React.useState("income");
 
   const handleChange = (event, newAlignment) => {
-    setState({
-      ...state,
-      category: newAlignment,
+    setTransactionInfo({
+      ...transactionInfo,
+      type: newAlignment,
     });
     setAlignment(newAlignment);
   };

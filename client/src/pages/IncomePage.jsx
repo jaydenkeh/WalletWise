@@ -20,7 +20,7 @@ function IncomePage() {
       <NavigationBar />
       <div> Page</div>
       <TotalIncomeTable />
-      <AddEntryForm entries={entries} setEntries={setEntries} />
+      <AddEntryForm setEntries={setEntries} />
       <IncomeTable entries={entries} setEntries={setEntries} />
     </>
   );

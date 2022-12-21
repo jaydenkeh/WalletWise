@@ -32,7 +32,7 @@ function IncomeTable({ entries, setEntries }) {
         <tbody>
           {entries?.map((entries) => (
             <tr key={entries._id}>
-              <td>{entries.account}</td>
+              <td>{entries.accountName}</td>
               <td>{entries.type}</td>
               <td>{entries.amount}</td>
               <td>{entries.description}</td>
