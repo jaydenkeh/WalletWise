@@ -30,9 +30,18 @@ function AccountsPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/api/account/")
-      .then((response) => response.json())
-      .then((data) => setUserAccounts(data));
+    const fetchUserAccounts = async () => {
+      const id = userinfo.id;
+      const response = await fetch(`/api/account/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setUserAccounts(data));
+    };
+    fetchUserAccounts();
     setAddNewAccount(false);
   }, [addnewaccount]);
 
@@ -90,7 +99,6 @@ function AccountsPage() {
     },
   ];
 
-  console.log(useraccounts);
   return (
     <>
       <NavigationBar />
@@ -121,7 +129,7 @@ function AccountsPage() {
       <div className="all-accounts-container">
         <Box sx={{ minWidth: 660, minHeight: 250 }}>
           <Masonry columns={5} spacing={2}>
-            {useraccounts.map((account, index) => (
+            {useraccounts?.map((account, index) => (
               <Item key={index} sx={{ height: 210 }}>
                 <p>
                   <b>{account.accountType}</b>
