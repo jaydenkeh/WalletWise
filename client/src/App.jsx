@@ -8,6 +8,7 @@ import AccountsPage from "./pages/AccountsPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import EditEntriesPage from "./pages/EditEntriesPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditAccountPage from "./pages/EditAccountPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/income" element={<IncomePage />} />
         <Route path="/income/:id" element={<EditEntriesPage />} />
         <Route path="/accounts-overview" element={<AccountsPage />} />
+        <Route path="/edit-account/:id" element={<EditAccountPage />} />
         <Route path="/transactions-history" element={<TransactionsPage />} />
       </Route>
     </Routes>
