@@ -12,6 +12,15 @@ import Paper from "@mui/material/Paper";
 import Masonry from "@mui/lab/Masonry";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 function AccountsPage() {
   const [useraccounts, setUserAccounts] = useState([]);
@@ -47,11 +56,62 @@ function AccountsPage() {
     color: theme.palette.text.secondary,
   }));
 
+  const data = [
+    {
+      name: "Page A",
+      Income: 4000,
+      Expenses: 2400,
+    },
+    {
+      name: "Page B",
+      Income: 3000,
+      Expenses: 1398,
+    },
+    {
+      name: "Page C",
+      Income: 2000,
+      Expenses: 9800,
+    },
+    {
+      name: "Page D",
+      Income: 2780,
+      Expenses: 3908,
+    },
+    {
+      name: "Page E",
+      Income: 1890,
+      Expenses: 4800,
+    },
+    {
+      name: "Page F",
+      Income: 2390,
+      Expenses: 3800,
+    },
+  ];
+
   console.log(useraccounts);
   return (
     <>
       <NavigationBar />
-      <div>AccountsPage</div>
+      <div className="account-barchart-container">
+        <BarChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <XAxis dataKey="name" />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="Income" fill="#8884d8" />
+          <Bar dataKey="Expenses" fill="#82ca9d" />
+        </BarChart>
+      </div>
       <br />
       <AddAccountForm userinfo={userinfo} setAddNewAccount={setAddNewAccount} />
       <Divider>
