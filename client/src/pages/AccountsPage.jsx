@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import AddAccountForm from "../components/accounts/AddAccountForm";
 import { UserAuth } from "../context/AuthContext";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Masonry from "@mui/lab/Masonry";
@@ -14,6 +17,7 @@ function AccountsPage() {
   const [useraccounts, setUserAccounts] = useState([]);
   const [addnewaccount, setAddNewAccount] = useState(false);
   const [userinfo, setUserInfo] = UserAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/api/account/")
@@ -43,6 +47,7 @@ function AccountsPage() {
     color: theme.palette.text.secondary,
   }));
 
+  console.log(useraccounts);
   return (
     <>
       <NavigationBar />
@@ -56,7 +61,7 @@ function AccountsPage() {
         <Box sx={{ minWidth: 660, minHeight: 250 }}>
           <Masonry columns={5} spacing={2}>
             {useraccounts.map((account, index) => (
-              <Item key={index} sx={{ height: 140 }}>
+              <Item key={index} sx={{ height: 210 }}>
                 <p>
                   <b>{account.accountType}</b>
                   <br />
@@ -64,13 +69,19 @@ function AccountsPage() {
                   {account.accountName}
                   <br />
                   {account.accountBalance} {account.currency}
-                  <Link to={`/edit-account/${account._id}`}>
-                    <button>Edit Account</button>
-                  </Link>
-                  <button onClick={() => handleDelete(account._id)}>
-                    Delete Account
-                  </button>
                 </p>
+                <IconButton
+                  aria-label="edit account"
+                  onClick={() => navigate(`/edit-account/${account._id}`)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="delete account"
+                  onClick={() => handleDelete(account._id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
               </Item>
             ))}
           </Masonry>
