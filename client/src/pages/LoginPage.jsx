@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function LoginPage() {
+export default function LoginPage({ setUserId }) {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -16,6 +16,7 @@ export default function LoginPage() {
       // const url = "https://beautiful-lion-gown.cyclic.app/api/login";
       const url = "http://localhost:3000/api/login/";
       const { data: res } = await axios.post(url, data);
+      console.log(data);
       localStorage.setItem("token", res.data);
       window.location = "/home";
     } catch (error) {
