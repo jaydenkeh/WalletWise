@@ -1,48 +1,43 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
 function AddEntryForm({ entries, setEntries }) {
-  let now = new Date();
-  let day = now.getDate();
-  let month = now.getMonth() + 1;
-  let year = now.getFullYear();
+  // let now = new Date();
+  // let day = now.getDate();
+  // let month = now.getMonth() + 1;
+  // let year = now.getFullYear();
 
-  month = month < 10 ? "0" + month : month;
-  day = day < 10 ? "0" + day : day;
-  let date = year + "-" + month + "-" + day;
+  // month = month < 10 ? "0" + month : month;
+  // day = day < 10 ? "0" + day : day;
+  // let date = year + "-" + month + "-" + day;
 
-  let toggle = "income";
+  let date = dayjs().format("YYYY-MM-DD");
 
-  if (toggle === "income") {
-    const [state, setState] = useState({
-      //get username from login auth state
-      userName: "admin",
-      account: "",
-      category: toggle,
-      type: "salary",
-      amount: "",
-      description: "",
-      date: date,
-    });
-  } else {
-    const [state, setState] = useState({
-      //get username from login auth state
-      userName: "admin",
-      account: "",
-      category: toggle,
-      type: "food",
-      amount: "",
-      description: "",
-      date: date,
-    });
-  }
+  const [state, setState] = useState({
+    //get username from login auth state
+    userName: "test",
+    account: "",
+    category: "income",
+    type: "salary",
+    amount: "",
+    description: "",
+    date: date,
+  });
 
   function handleChange(event) {
     const value = event.target.value;
-    setState({
-      ...state,
-      [event.target.name]: value,
-    });
+    if (event.target.name === "amount") {
+      setState({
+        ...state,
+        [event.target.name]: value * 100,
+      });
+    } else {
+      setState({
+        ...state,
+        [event.target.name]: value,
+      });
+    }
   }
 
   const handleSubmit = async () => {
@@ -63,7 +58,9 @@ function AddEntryForm({ entries, setEntries }) {
 
       fetch("/api/income/")
         .then((response) => response.json())
-        .then((data) => setEntries(data));
+        .then((data) => {
+          setEntries(data);
+        });
 
       // console.log(data);
     } catch (error) {

@@ -7,6 +7,9 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const income = await Income.find().exec();
+    for (let i = 0; i < income.length; i++) {
+      income[i].amount = income[i].amount / 100;
+    }
     res.json(income);
   } catch (error) {
     res.status(500).json({ error });
@@ -15,7 +18,7 @@ router.get("/", async (req, res) => {
 
 router.get("/total", async (req, res) => {
   try {
-    Income.aggregate(
+    const income = Income.aggregate(
       [
         //get userName from jwt token payload
         { $match: { userName: "test" } },
@@ -78,6 +81,9 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const income = await Income.findById(id);
+    for (let i = 0; i < income.length; i++) {
+      income[i].amount = income[i].amount / 100;
+    }
     res.json(income);
   } catch (error) {
     res.status(500).json({ error });
