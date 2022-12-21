@@ -24,6 +24,19 @@ function AccountsPage() {
   console.log(useraccounts);
   //TODO to map out the user accounts details + fix logic to fetch data everytime when user adds new account
 
+  const handleDelete = async (id) => {
+    const response = await fetch(`/api/account/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUserAccounts(useraccounts.filter((ele) => ele._id !== id));
+      });
+  };
+
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -54,6 +67,9 @@ function AccountsPage() {
                   {account.accountName}
                   <br />
                   {account.accountBalance} {account.currency}
+                  <button onClick={() => handleDelete(account._id)}>
+                    Delete Account
+                  </button>
                 </p>
               </Item>
             ))}
