@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import AddAccountForm from "../components/accounts/AddAccountForm";
 import IncomeTable from "../components/income/IncomeTable";
@@ -67,6 +68,9 @@ function AccountsPage() {
                   {account.accountName}
                   <br />
                   {account.accountBalance} {account.currency}
+                  <Link to={`/edit-account/${account._id}`}>
+                    <button>Edit Account</button>
+                  </Link>
                   <button onClick={() => handleDelete(account._id)}>
                     Delete Account
                   </button>

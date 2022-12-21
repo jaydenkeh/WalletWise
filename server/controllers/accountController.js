@@ -11,6 +11,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const account = await Account.findById(id);
+    res.status(200).json(account);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
 router.post("/new", async (req, res) => {
   try {
     const account = await Account.create(req.body);
