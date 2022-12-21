@@ -24,6 +24,7 @@ function IncomeTable({ entries, setEntries }) {
           <tr>
             <th>Account</th>
             <th>Type</th>
+            <th>Category</th>
             <th>Amount</th>
             <th>Description</th>
             <th>Date</th>
@@ -34,6 +35,7 @@ function IncomeTable({ entries, setEntries }) {
             <tr key={entries._id}>
               <td>{entries.accountName}</td>
               <td>{entries.type}</td>
+              <td>{entries.category}</td>
               <td>{entries.amount}</td>
               <td>{entries.description}</td>
               <td>{dayjs(entries.date).format("DD-MMM-YYYY")}</td>

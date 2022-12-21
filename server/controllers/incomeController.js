@@ -19,7 +19,7 @@ router.get("/total/:id", async (req, res) => {
   try {
     const income = Transaction.aggregate(
       [
-        { $match: { $and: [{ userid: id }, { category: "income" }] } },
+        { $match: { $and: [{ userid: id }, { type: "income" }] } },
         {
           $group: {
             _id: "$category",

@@ -4,7 +4,7 @@ import { UserAuth } from "../../context/AuthContext";
 import dayjs from "dayjs";
 import Toggle from "../Toggle";
 
-function AddEntryForm({ setEntries }) {
+function AddEntryForm({ setEntries, setNewEntry }) {
   const [userinfo, setUserInfo] = UserAuth();
   const [account, setAccount] = useState([]);
 
@@ -86,6 +86,7 @@ function AddEntryForm({ setEntries }) {
         .then((response) => response.json())
         .then((data) => {
           setEntries(data);
+          setNewEntry(true);
         });
 
       // console.log(data);
