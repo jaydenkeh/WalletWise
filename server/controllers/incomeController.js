@@ -1,25 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const Income = require("../models/incomeSchema.js");
+const Transaction = require("../models/transactionSchema.js");
 
 router.get("/", async (req, res) => {
   try {
-    const income = await Income.find().exec();
+    const income = await Transaction.find().exec();
     for (let i = 0; i < income.length; i++) {
       income[i].amount = income[i].amount / 100;
     }
-    res.json(income);
+    res.status(200).json(income);
   } catch (error) {
     res.status(500).json({ error });
   }
 });
 
-router.get("/total", async (req, res) => {
+router.get("/total/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const income = Income.aggregate(
+    const income = Transaction.aggregate(
       [
-        //get userName from jwt token payload
-        { $match: { userName: "test" } },
+        { $match: { userid: id } },
         {
           $group: {
             _id: "$category",
@@ -31,9 +31,9 @@ router.get("/total", async (req, res) => {
       ],
       function (err, result) {
         if (err) {
-          res.send(err);
+          res.json(err);
         } else {
-          res.json(result);
+          res.status(200).json(result);
         }
       }
     );
@@ -42,33 +42,9 @@ router.get("/total", async (req, res) => {
   }
 });
 
-// router.route("/total").get(function (req, res) {
-//   Income.aggregate(
-//     [
-//       //get userName from jwt token payload
-//       { $match: { userName: "admin" } },
-//       {
-//         $group: {
-//           _id: "$account",
-//           total: {
-//             $sum: "$amount",
-//           },
-//         },
-//       },
-//     ],
-//     function (err, result) {
-//       if (err) {
-//         res.send(err);
-//       } else {
-//         res.json(result);
-//       }
-//     }
-//   );
-// });
-
 router.post("/", async (req, res) => {
   try {
-    const income = await Income.create(req.body);
+    const income = await Transaction.create(req.body);
     res.status(201).json(income);
   } catch (error) {
     res.status(500).json({ error });
@@ -78,11 +54,11 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const income = await Income.findById(id);
+    const income = await Transaction.findById(id);
     for (let i = 0; i < income.length; i++) {
       income[i].amount = income[i].amount / 100;
     }
-    res.json(income);
+    res.status(200).json(income);
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -91,12 +67,12 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const income = await Income.findByIdAndUpdate(
+    const income = await Transaction.findByIdAndUpdate(
       id,
       { $set: req.body },
       { new: true }
     );
-    res.json(income);
+    res.status(200).json(income);
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -105,22 +81,11 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const income = await Income.findByIdAndDelete(id);
-    res.json(income);
+    const income = await Transaction.findByIdAndDelete(id);
+    res.status(200).json(income);
   } catch (error) {
     res.status(500).json({ error });
   }
 });
-
-// app.post("/api/income", async (req, res) => {
-//   try {
-//     const income = await Income.create(req.body);
-//     res.status(201).json(income);
-//     console.log(req.body);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ error });
-//   }
-// });
 
 module.exports = router;
