@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
+import { UserAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 // https://kb.objectrocket.com/mongo-db/mongoose-aggregate-sum-1220
 
 function TotalIncomeTable() {
+  const [userinfo, setUserInfo] = UserAuth();
   const [total, setTotal] = useState([]);
 
   useEffect(() => {
-    fetch("/api/income/total")
+    const id = userinfo.id;
+    fetch(`/api/income/total/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setTotal(data);
@@ -25,7 +28,7 @@ function TotalIncomeTable() {
           </tr>
         </thead>
         <tbody>
-          {total.map((total) => (
+          {total?.map((total) => (
             <tr key={total._id}>
               <td>{total._id}</td>
               {/* fix display to 2d.p. */}
