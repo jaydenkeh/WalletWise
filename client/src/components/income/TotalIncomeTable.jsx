@@ -9,7 +9,9 @@ function TotalIncomeTable() {
   useEffect(() => {
     fetch("/api/income/total")
       .then((response) => response.json())
-      .then((data) => setTotal(data));
+      .then((data) => {
+        setTotal(data);
+      });
   }, []);
 
   return (
@@ -27,7 +29,7 @@ function TotalIncomeTable() {
             <tr key={total._id}>
               <td>{total._id}</td>
               {/* fix display to 2d.p. */}
-              <td>{total.total}</td>
+              <td>{total.total / 100}</td>
             </tr>
           ))}
           {/* <tr>

@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/NavigationBar";
+import dayjs from "dayjs";
 
 function EditEntriesPage() {
   const navigate = useNavigate();
@@ -98,7 +99,11 @@ function EditEntriesPage() {
           <br />
           <label>
             Date:
-            <input name="date" type="date" defaultValue={entries.date}></input>
+            <input
+              name="date"
+              type="date"
+              defaultValue={dayjs(entries.date).format("YYYY-MM-DD")}
+            ></input>
           </label>
         </fieldset>
         {/* <input type="submit" value="Update" /> */}
