@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
-function AddEntryForm({ entries, setEntries }) {
+function AddEntryForm({ userinfo }) {
   // let now = new Date();
   // let day = now.getDate();
   // let month = now.getMonth() + 1;
@@ -14,35 +14,32 @@ function AddEntryForm({ entries, setEntries }) {
 
   let date = dayjs().format("YYYY-MM-DD");
 
-  const [state, setState] = useState({
-    //get username from login auth state
-    userName: "test",
-    account: "",
-    category: "income",
-    type: "salary",
+  const [transactioninfo, setTransactionInfo] = useState({
+    accountName: "",
+    category: "Salary",
     amount: "",
     description: "",
     date: date,
+    userid: userinfo.id,
   });
 
   function handleChange(event) {
     const value = event.target.value;
     if (event.target.name === "amount") {
-      setState({
-        ...state,
+      setTransactionInfo({
+        ...transactioninfo,
         [event.target.name]: value * 100,
       });
     } else {
-      setState({
-        ...state,
+      setTransactionInfo({
+        ...transactioninfo,
         [event.target.name]: value,
       });
     }
   }
 
   const handleSubmit = async () => {
-    const info = state;
-
+    const info = transactioninfo;
     try {
       const response = await fetch("/api/income", {
         method: "POST",
@@ -68,15 +65,6 @@ function AddEntryForm({ entries, setEntries }) {
       alert(error);
     }
   };
-
-  // useEffect(() => {
-  //   const fetchIncome = async () => {
-  //     const response = await fetch(`/api/income/${id}`);
-  //     const data = await response.json();
-  //     setEntries(data);
-  //   };
-  //   fetchIncome();
-  // }, [id]);
 
   return (
     <>

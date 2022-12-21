@@ -77,7 +77,7 @@ export default function HomePage() {
           </div>
           <TotalIncomeTable />
           <br />
-          <AddEntryForm />
+          <AddEntryForm userinfo={userinfo} />
         </>
       )}
     </>
