@@ -3,20 +3,19 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import Toggle from "../Toggle";
 
-function AddEntryForm({ entries, setEntries }) {
+function AddEntryForm({ userinfo }) {
   const [account, setAccount] = useState([]);
 
   let date = dayjs().format("YYYY-MM-DD");
 
   const [state, setState] = useState({
-    //get username from login auth state
-    userName: "test",
-    account: "",
-    category: "income",
-    type: "",
+    accountName: "",
+    type: "income",
+    category: "",
     amount: "",
     description: "",
     date: date,
+    userid: userinfo.id,
   });
 
   const expenseSelection = ["Food", "Transport", "Entertainment", "Others"];
@@ -54,21 +53,20 @@ function AddEntryForm({ entries, setEntries }) {
   function handleChange(event) {
     const value = event.target.value;
     if (event.target.name === "amount") {
-      setState({
-        ...state,
+      setTransactionInfo({
+        ...transactioninfo,
         [event.target.name]: value * 100,
       });
     } else {
-      setState({
-        ...state,
+      setTransactionInfo({
+        ...transactioninfo,
         [event.target.name]: value,
       });
     }
   }
 
   const handleSubmit = async () => {
-    const info = state;
-
+    const info = transactioninfo;
     try {
       const response = await fetch("/api/income", {
         method: "POST",
@@ -94,15 +92,6 @@ function AddEntryForm({ entries, setEntries }) {
       alert(error);
     }
   };
-
-  // useEffect(() => {
-  //   const fetchIncome = async () => {
-  //     const response = await fetch(`/api/income/${id}`);
-  //     const data = await response.json();
-  //     setEntries(data);
-  //   };
-  //   fetchIncome();
-  // }, [id]);
 
   return (
     <>

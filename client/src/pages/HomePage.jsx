@@ -19,7 +19,8 @@ export default function HomePage() {
   // ];
 
   useEffect(() => {
-    fetch("/api/income/total")
+    const id = userinfo.id;
+    fetch(`/api/income/total/${id}`)
       .then((response) => response.json())
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
@@ -76,7 +77,7 @@ export default function HomePage() {
           </div>
           <TotalIncomeTable />
           <br />
-          <AddEntryForm />
+          <AddEntryForm userinfo={userinfo} />
         </>
       )}
     </>
