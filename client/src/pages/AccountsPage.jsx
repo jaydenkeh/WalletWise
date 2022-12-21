@@ -12,6 +12,7 @@ import Chip from "@mui/material/Chip";
 
 function AccountsPage() {
   const [useraccounts, setUserAccounts] = useState([]);
+  const [addnewaccount, setAddNewAccount] = useState(false);
   const [userinfo, setUserInfo] = UserAuth();
 
   useEffect(() => {
@@ -21,8 +22,7 @@ function AccountsPage() {
   }, []);
 
   console.log(useraccounts);
-
-  const heights = [150, 30, 90, 70, 90, 100, 150, 30, 50, 80];
+  //TODO to map out the user accounts details + fix logic to fetch data everytime when user adds new account
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -45,9 +45,16 @@ function AccountsPage() {
       <div className="all-accounts-container">
         <Box sx={{ minWidth: 660, minHeight: 250 }}>
           <Masonry columns={5} spacing={2}>
-            {heights.map((height, index) => (
-              <Item key={index} sx={{ height }}>
-                {index + 1}
+            {useraccounts.map((account, index) => (
+              <Item key={index} sx={{ height: 140 }}>
+                <p>
+                  <b>{account.accountType}</b>
+                  <br />
+                  <br />
+                  {account.accountName}
+                  <br />
+                  {account.accountBalance} {account.currency}
+                </p>
               </Item>
             ))}
           </Masonry>
