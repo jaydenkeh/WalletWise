@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddAccountForm({ userinfo }) {
+function AddAccountForm({ userinfo, setAddNewAccount }) {
   const [accountinfo, setAccountInfo] = useState({
     accountName: "",
     accountType: "Bank Account",
@@ -24,6 +24,7 @@ function AddAccountForm({ userinfo }) {
         },
         body: JSON.stringify(accountinfo),
       }).then((response) => response.json());
+      setAddNewAccount(true);
       if (!response.ok) {
         throw new Error("Network response was not OK");
       }

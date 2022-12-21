@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import AddAccountForm from "../components/accounts/AddAccountForm";
-import IncomeTable from "../components/income/IncomeTable";
 import { UserAuth } from "../context/AuthContext";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
@@ -20,10 +19,8 @@ function AccountsPage() {
     fetch("/api/account/")
       .then((response) => response.json())
       .then((data) => setUserAccounts(data));
-  }, []);
-
-  console.log(useraccounts);
-  //TODO to map out the user accounts details + fix logic to fetch data everytime when user adds new account
+    setAddNewAccount(false);
+  }, [addnewaccount]);
 
   const handleDelete = async (id) => {
     const response = await fetch(`/api/account/${id}`, {
@@ -51,8 +48,7 @@ function AccountsPage() {
       <NavigationBar />
       <div>AccountsPage</div>
       <br />
-      <AddAccountForm userinfo={userinfo} />
-      {/* <IncomeTable entries={entries} setEntries={setEntries} /> */}
+      <AddAccountForm userinfo={userinfo} setAddNewAccount={setAddNewAccount} />
       <Divider>
         <Chip label="All Your Accounts" />
       </Divider>
