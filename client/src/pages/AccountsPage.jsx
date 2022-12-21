@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import Masonry from "@mui/lab/Masonry";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
+import Pagination from "@mui/material/Pagination";
 import {
   BarChart,
   Bar,
@@ -109,7 +110,7 @@ function AccountsPage() {
           <Tooltip />
           <Legend />
           <Bar dataKey="Income" fill="#8884d8" />
-          <Bar dataKey="Expenses" fill="#82ca9d" />
+          <Bar dataKey="Expenses" fill="#f0a911" />
         </BarChart>
       </div>
       <br />

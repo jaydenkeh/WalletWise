@@ -1,8 +1,6 @@
 const express = require("express");
-const Income = require("../models/incomeSchema.js");
-const jwt = require("jsonwebtoken");
-
 const router = express.Router();
+const Income = require("../models/incomeSchema.js");
 
 router.get("/", async (req, res) => {
   try {
@@ -24,7 +22,7 @@ router.get("/total", async (req, res) => {
         { $match: { userName: "test" } },
         {
           $group: {
-            _id: "$type",
+            _id: "$category",
             total: {
               $sum: "$amount",
             },
