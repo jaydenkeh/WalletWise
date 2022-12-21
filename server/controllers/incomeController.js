@@ -21,7 +21,7 @@ router.get("/total", async (req, res) => {
     const income = Income.aggregate(
       [
         //get userName from jwt token payload
-        { $match: { userName: "test" } },
+        { $match: { $and: [{ userName: "test" }, { category: "income" }] } },
         {
           $group: {
             _id: "$type",
