@@ -12,15 +12,6 @@ import Paper from "@mui/material/Paper";
 import Masonry from "@mui/lab/Masonry";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 
 function AccountsPage({ entries }) {
   const [useraccounts, setUserAccounts] = useState([]);
@@ -207,25 +198,6 @@ function AccountsPage({ entries }) {
   return (
     <>
       <NavigationBar />
-      <div className="account-barchart-container">
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <XAxis dataKey="name" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Income" fill="#8884d8" />
-          <Bar dataKey="Expenses" fill="#f0a911" />
-        </BarChart>
-      </div>
       <br />
       <AddAccountForm userinfo={userinfo} setAddNewAccount={setAddNewAccount} />
       <Divider>
