@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import NavigationBar from "../components/NavigationBar";
-import TotalIncomeTable from "../components/income/TotalIncomeTable";
 import AddEntryForm from "../components/income/AddEntryForm";
 import { PieChart, Pie, Legend, Tooltip } from "recharts";
 import { UserAuth } from "../context/AuthContext";
@@ -9,15 +8,6 @@ export default function HomePage({ entries, fetchTransaction }) {
   const [userinfo, setUserInfo] = UserAuth();
   const [income, setIncome] = useState([]);
   const [expense, setExpense] = useState([]);
-
-  // const data01 = [
-  //   { name: "Group A", value: 400 },
-  //   { name: "Group B", value: 300 },
-  //   { name: "Group C", value: 300 },
-  //   { name: "Group D", value: 200 },
-  //   { name: "Group E", value: 278 },
-  //   { name: "Group F", value: 189 },
-  // ];
 
   useEffect(() => {
     const id = userinfo.id;

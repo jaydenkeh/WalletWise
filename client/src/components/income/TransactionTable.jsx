@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
-function IncomeTable({ entries, setEntries }) {
+function TransactionTable({ entries, setEntries }) {
   const handleDelete = (id) => {
     fetch(`/api/transaction/${id}`, {
       method: "DELETE",
@@ -58,4 +57,4 @@ function IncomeTable({ entries, setEntries }) {
   );
 }
 
-export default IncomeTable;
+export default TransactionTable;

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import NavigationBar from "../components/NavigationBar";
 import AddEntryForm from "../components/income/AddEntryForm";
-import IncomeTable from "../components/income/IncomeTable";
+import TransactionTable from "../components/income/TransactionTable";
 
 export default function TransactionsPage({
   entries,
@@ -13,7 +12,7 @@ export default function TransactionsPage({
       <NavigationBar />
       <div>TransactionsPage</div>
       <AddEntryForm fetchTransaction={fetchTransaction} />
-      <IncomeTable entries={entries} setEntries={setEntries} />
+      <TransactionTable entries={entries} setEntries={setEntries} />
     </>
   );
 }
