@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     fetchTransaction();
-  }, [entries]);
+  }, []);
 
   const fetchTransaction = () => {
     fetch("/api/transaction/")
