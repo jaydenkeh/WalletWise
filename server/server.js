@@ -3,7 +3,6 @@ const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-// const morgan = require("morgan");
 const signupController = require("./controllers/signupController.js");
 const loginController = require("./controllers/loginController.js");
 const transactionController = require("./controllers/transactionController.js");
@@ -21,7 +20,6 @@ mongoose.connect(MONGO_URI);
 
 app.use(express.json());
 app.use(cors());
-// app.use(morgan("dev"));
 app.use(express.static("../client/dist"));
 app.use("/api/signup", signupController);
 app.use("/api/login", loginController);
