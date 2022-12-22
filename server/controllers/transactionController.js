@@ -15,6 +15,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const transaction = await Transaction.find({ userid: id }).exec();
+    for (let i = 0; i < transaction.length; i++) {
+      transaction[i].amount = transaction[i].amount / 100;
+    }
+    res.status(200).json(transaction);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
 router.get("/income/total/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -82,13 +95,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/edit/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const transaction = await Transaction.findById(id);
-    for (let i = 0; i < transaction.length; i++) {
-      transaction[i].amount = transaction[i].amount / 100;
-    }
+    // transaction.amount = transaction.amount / 100;
     res.status(200).json(transaction);
   } catch (error) {
     res.status(500).json({ error });
@@ -147,5 +158,63 @@ router.delete("/:id", async (req, res) => {
 //   }
 // });
 // //
+
+//get all income for userid and accountname
+router.get("/account/income/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const income = Transaction.aggregate(
+      [
+        { $match: { $and: [{ userid: id }, { type: "income" }] } },
+        {
+          $group: {
+            _id: "$accountName",
+            income: {
+              $sum: "$amount",
+            },
+          },
+        },
+      ],
+      function (err, result) {
+        if (err) {
+          res.json(err);
+        } else {
+          res.status(200).json(result);
+        }
+      }
+    );
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
+//get all expenses for userid and accountname
+router.get("/account/expense/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const income = Transaction.aggregate(
+      [
+        { $match: { $and: [{ userid: id }, { type: "expense" }] } },
+        {
+          $group: {
+            _id: "$accountName",
+            expense: {
+              $sum: "$amount",
+            },
+          },
+        },
+      ],
+      function (err, result) {
+        if (err) {
+          res.json(err);
+        } else {
+          res.status(200).json(result);
+        }
+      }
+    );
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
 
 module.exports = router;

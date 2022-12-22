@@ -11,7 +11,19 @@ function AddAccountForm({ userinfo, setAddNewAccount }) {
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget: input }) => {
-    setAccountInfo({ ...accountinfo, [input.name]: input.value });
+    // const value = event.target.value;
+    if (input.name === "accountBalance") {
+      setAccountInfo({
+        ...accountinfo,
+        [input.name]: input.value * 100,
+      });
+    } else {
+      setAccountInfo({
+        ...accountinfo,
+        [input.name]: input.value,
+      });
+    }
+    // setAccountInfo({ ...accountinfo, [input.name]: input.value });
   };
 
   const handleSubmit = async (e) => {
@@ -53,7 +65,7 @@ function AddAccountForm({ userinfo, setAddNewAccount }) {
                 type="text"
                 placeholder="Give your account a name"
                 onChange={handleChange}
-                value={accountinfo.accountName}
+                defaultValue=""
               />
             </label>
             <br />
@@ -79,8 +91,10 @@ function AddAccountForm({ userinfo, setAddNewAccount }) {
                 name="accountBalance"
                 type="number"
                 placeholder="Account current balance"
+                step="any"
+                min="0"
                 onChange={handleChange}
-                value={accountinfo.accountBalance}
+                defaultValue=""
               />
             </label>
             <br />
@@ -92,7 +106,7 @@ function AddAccountForm({ userinfo, setAddNewAccount }) {
                 type="text"
                 placeholder="Account currency"
                 onChange={handleChange}
-                value={accountinfo.currency}
+                defaultValue=""
               />
             </label>
             <br />
