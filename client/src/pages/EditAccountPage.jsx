@@ -31,6 +31,7 @@ export default function EditAccountPage() {
     };
     fetchAccount();
   }, [id]);
+
   return (
     <>
       <NavigationBar />

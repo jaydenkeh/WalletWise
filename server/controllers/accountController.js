@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const account = await Account.find({ userid: id }).exec();
+    const account = await Account.findById(id);
     res.status(200).json(account);
   } catch (error) {
     res.status(500).json({ error });
