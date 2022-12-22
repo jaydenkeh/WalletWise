@@ -91,23 +91,23 @@ router.post("/", async (req, res) => {
 
     let updateAmount;
     if (req.body.type === "expense") {
-      updateAmount = req.body.amount * -1;
+      newamount = req.body.amount * -1;
     } else {
-      updateAmount = req.body.amount;
+      newamount = req.body.amount;
     }
-
     const updatedAccount = await Account.findOneAndUpdate(
       { userid: req.body.userid, accountName: req.body.accountName },
       {
         $inc: {
-          accountBalance: updateAmount,
+          accountBalance: newamount,
         },
       },
       { new: true }
     );
     if (!updatedAccount) {
-      return res.status(400), json({ error: "Account not found" });
+      return res.status(400).json({ error: "Account not found" });
     }
+    res.status(201).json(transaction);
   } catch (error) {
     res.status(500).json({ error });
   }

@@ -13,8 +13,8 @@ export default function LoginPage({ setUserId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "https://beautiful-lion-gown.cyclic.app/api/login";
-      // const url = "http://localhost:3000/api/login/";
+      // const url = "https://beautiful-lion-gown.cyclic.app/api/login";
+      const url = "http://localhost:3000/api/login/";
       const { data: res } = await axios.post(url, data);
       console.log(data);
       localStorage.setItem("token", res.data);
