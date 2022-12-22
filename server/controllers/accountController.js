@@ -7,6 +7,9 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const account = await Account.find({ userid: id }).exec();
+    for (let i = 0; i < account.length; i++) {
+      account[i].accountBalance = account[i].accountBalance / 100;
+    }
     res.status(200).json(account);
   } catch (error) {
     res.status(500).json({ error });

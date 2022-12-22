@@ -22,11 +22,23 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function AccountsPage() {
+function AccountsPage({ entries }) {
   const [useraccounts, setUserAccounts] = useState([]);
   const [addnewaccount, setAddNewAccount] = useState(false);
+  const [transactionIncome, setTransactionIncome] = useState([]);
+  const [transactionExpense, setTransactionExpense] = useState([]);
+  const [accountSummary, setAccountSummary] = useState([]);
   const [userinfo, setUserInfo] = UserAuth();
   const navigate = useNavigate();
+
+  // accountSummary = [
+  //   {
+  //     accountType: "",
+  //     accountName: "",
+  //     accountBalance: "",
+  //     currency: "",
+  //   },
+  // ];
 
   useEffect(() => {
     const fetchUserAccounts = async () => {
@@ -45,19 +57,98 @@ function AccountsPage() {
   }, [addnewaccount]);
 
   useEffect(() => {
-    const fetchUserAccountIncome = async () => {
-      const id = userinfo.id;
-      const response = await fetch(`/api/transaction/account/income/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => setUserAccounts(data));
-    };
-    fetchUserAccountIncome();
-  }, []);
+    fetchTransactionIncome();
+    fetchTransactionExpense();
+  }, [entries]);
+
+  const fetchTransactionIncome = async () => {
+    const id = userinfo.id;
+    const response = await fetch(`/api/transaction/account/income/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setTransactionIncome(data));
+  };
+
+  const fetchTransactionExpense = async () => {
+    const id = userinfo.id;
+    const response = await fetch(`/api/transaction/account/expense/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setTransactionExpense(data));
+  };
+
+  const accountCompile = () => {
+    for (let i = 0; i < useraccounts.length; i++) {
+      for (let j = 0; j < transactionIncome.length; j++) {
+        if (useraccounts[i].accountName === transactionIncome[j]._id) {
+          // console.log(
+          //   "useraccounts",
+          //   i,
+          //   useraccounts[i].accountName,
+          //   "transactionincome",
+          //   j,
+          //   transactionIncome[j]._id,
+          //   transactionIncome[j].income
+          // );
+          console.log(
+            "original+income",
+            useraccounts[i].accountName,
+            transactionIncome[j]._id,
+            useraccounts[i].accountBalance * 100 + transactionIncome[j].income
+          );
+          // setAccountSummary([
+          //   ...accountSummary,
+          //   {
+          //     accountType: useraccounts[i].accountType,
+          //     accountName: useraccounts[i].accountName,
+          //     accountBalance:
+          //       useraccounts[i].accountBalance * 100 +
+          //       transactionIncome[j].income,
+          //     currency: useraccounts[i].currency,
+          //   },
+          // ]);
+        }
+      }
+    }
+
+    // for (let i = 0; i < useraccounts.length; i++) {
+    //   for (let j = 0; j < transactionExpense.length; j++) {
+    //     if (useraccounts[i].accountName === transactionExpense[j]._id) {
+    //       // console.log(
+    //       //   "useraccounts",
+    //       //   i,
+    //       //   useraccounts[i].accountName,
+    //       //   "transactionExpense",
+    //       //   j,
+    //       //   transactionExpense[j]._id,
+    //       //   transactionExpense[j].expense
+    //       // );
+    //       console.log(
+    //         "original-expense",
+    //         useraccounts[i].accountName,
+    //         transactionExpense[j]._id,
+    //         useraccounts[i].accountBalance * 100 - transactionExpense[j].expense
+    //       );
+    //     }
+    //   }
+    // }
+  };
+  accountCompile();
+
+  // setAccountSummary([
+  //   {
+  //     accountBalance: "",
+  //     accountName: "",
+  //   },
+  // ]);
 
   const handleDelete = async (id) => {
     const response = await fetch(`/api/account/${id}`, {
@@ -79,17 +170,6 @@ function AccountsPage() {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
-
-  // useEffect(() => {
-  //   fetch(`/api/transaction//total/`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       for (let i = 0; i < data.length; i++) {
-  //         data[i].total = data[i].total / 100;
-  //       }
-  //       setTotal(data);
-  //     });
-  // }, []);
 
   const data = [
     {
@@ -162,7 +242,8 @@ function AccountsPage() {
                   <br />
                   {account?.accountName}
                   <br />
-                  {account?.accountBalance} {account?.currency}
+                  {account?.accountBalance}
+                  {account?.currency}
                 </p>
                 <IconButton
                   aria-label="edit account"

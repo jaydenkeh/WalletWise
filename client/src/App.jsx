@@ -38,7 +38,10 @@ function App() {
           }
         />
         <Route path="/transaction/:id" element={<EditEntriesPage />} />
-        <Route path="/accounts-overview" element={<AccountsPage />} />
+        <Route
+          path="/accounts-overview"
+          element={<AccountsPage entries={entries} />}
+        />
         <Route path="/edit-account/:id" element={<EditAccountPage />} />
         <Route
           path="/transactions-history"
