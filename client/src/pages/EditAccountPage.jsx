@@ -11,6 +11,7 @@ export default function EditAccountPage() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const info = Object.fromEntries(formData);
+    info.accountBalance = info.accountBalance * 100;
 
     const response = await fetch(`/api/account/${id}`, {
       method: "PUT",

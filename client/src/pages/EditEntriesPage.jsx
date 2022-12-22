@@ -20,16 +20,16 @@ function EditEntriesPage() {
     "Investments",
     "Others",
   ];
-  const expenses = expenseSelection.map((ele) => {
+  const expenses = expenseSelection.map((ele, index) => {
     return (
-      <option key={ele} value={ele}>
+      <option key={index} value={ele}>
         {ele}
       </option>
     );
   });
-  const incomes = incomeSelection.map((ele) => {
+  const incomes = incomeSelection.map((ele, index) => {
     return (
-      <option key={ele} value={ele}>
+      <option key={index} value={ele}>
         {ele}
       </option>
     );
@@ -37,9 +37,9 @@ function EditEntriesPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.target);
     const formData = new FormData(event.target);
     const info = Object.fromEntries(formData);
+    info.amount = info.amount * 100;
 
     const response = await fetch(`/api/transaction/${id}`, {
       method: "PUT",
@@ -70,12 +70,6 @@ function EditEntriesPage() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   fetch("/api/income/")
-  //     .then((response) => response.json())
-  //     .then((data) => setEntries(data));
-  // }, []);
-
   return (
     <>
       <Navbar />
@@ -89,10 +83,12 @@ function EditEntriesPage() {
               id="type-select"
               defaultValue={"default"}
             >
-              <option value="default">{entries.accountName}</option>
+              <option value="default" disabled>
+                Select Account
+              </option>
               {account?.map((account) => (
-                <option key={account._id} value={account.accountName}>
-                  {account.accountName}
+                <option key={entries._id} value={entries.accountName}>
+                  {entries.accountName}
                 </option>
               ))}
             </select>
@@ -100,12 +96,10 @@ function EditEntriesPage() {
           <br />
           <label>
             Category:
-            <select
-              name="category"
-              id="type-select"
-              defaultValue={entries.category}
-            >
-              <option value="default">{entries.category}</option>
+            <select name="category" id="type-select" defaultValue={"default"}>
+              <option value="default" disabled>
+                Select type
+              </option>
               {entries?.type === "income" ? incomes : expenses}
             </select>
           </label>
@@ -140,7 +134,6 @@ function EditEntriesPage() {
             ></input>
           </label>
         </fieldset>
-        {/* <input type="submit" value="Update" /> */}
         <button type="submit">Update</button>
         <button type="reset">Reset</button>
       </form>

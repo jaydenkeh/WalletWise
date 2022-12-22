@@ -21,9 +21,7 @@ router.get("/edit-account/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const account = await Account.findById(id);
-    for (let i = 0; i < account.length; i++) {
-      account[i].accountBalance = account[i].accountBalance / 100;
-    }
+    account.accountBalance = account.accountBalance / 100;
     res.status(200).json(account);
   } catch (error) {
     res.status(500).json({ error });

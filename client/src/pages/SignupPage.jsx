@@ -18,8 +18,8 @@ export default function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const url = "https://beautiful-lion-gown.cyclic.app/api/signup";
-      const url = "http://localhost:3000/api/signup";
+      const url = "https://beautiful-lion-gown.cyclic.app/api/signup";
+      // const url = "http://localhost:3000/api/signup";
       const { data: res } = await axios.post(url, data);
       navigate("/home");
     } catch (error) {
