@@ -25,12 +25,13 @@ export default function EditAccountPage() {
 
   useEffect(() => {
     const fetchAccount = async () => {
-      const response = await fetch(`/api/account/${id}`);
+      const response = await fetch(`/api/account/edit-account/${id}`);
       const data = await response.json();
       setAccount(data);
     };
     fetchAccount();
   }, [id]);
+
   return (
     <>
       <NavigationBar />

@@ -157,12 +157,12 @@ function AccountsPage() {
             {useraccounts?.map((account, index) => (
               <Item key={index} sx={{ height: 210 }}>
                 <p>
-                  <b>{account.accountType}</b>
+                  <b>{account?.accountType}</b>
                   <br />
                   <br />
-                  {account.accountName}
+                  {account?.accountName}
                   <br />
-                  {account.accountBalance} {account.currency}
+                  {account?.accountBalance} {account?.currency}
                 </p>
                 <IconButton
                   aria-label="edit account"
