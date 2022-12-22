@@ -65,9 +65,20 @@ function AccountsPage() {
     color: theme.palette.text.secondary,
   }));
 
+  // useEffect(() => {
+  //   fetch(`/api/transaction//total/`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       for (let i = 0; i < data.length; i++) {
+  //         data[i].total = data[i].total / 100;
+  //       }
+  //       setTotal(data);
+  //     });
+  // }, []);
+
   const data = [
     {
-      name: "Page A",
+      name: "Page A", //* (MMM/YYYY)
       Income: 4000,
       Expenses: 2400,
     },

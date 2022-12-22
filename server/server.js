@@ -7,8 +7,6 @@ const morgan = require("morgan");
 const signupController = require("./controllers/signupController.js");
 const loginController = require("./controllers/loginController.js");
 const transactionController = require("./controllers/transactionController.js");
-const incomeController = require("./controllers/incomeController.js");
-const expensesController = require("./controllers/expensesController.js");
 const accountController = require("./controllers/accountController.js");
 
 const app = express();
@@ -28,8 +26,6 @@ app.use(express.static("../client/dist"));
 app.use("/api/signup", signupController);
 app.use("/api/login", loginController);
 app.use("/api/transaction", transactionController);
-app.use("/api/income", incomeController);
-app.use("/api/expense", expensesController);
 app.use("/api/account", accountController);
 
 app.get("/api", (req, res) => {

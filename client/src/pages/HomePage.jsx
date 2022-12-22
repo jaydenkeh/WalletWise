@@ -11,14 +11,6 @@ export default function HomePage({ entries, fetchTransaction }) {
 
   const incomeColours = ["#9C27B0", "#3F51B5", "#03A9F4", "#009688", "#8BC34A"];
   const expenseColours = ["#FF7043", "#FFCA28", "#D4E157", "#66BB6A"];
-  // const data01 = [
-  //   { name: "Group A", value: 400 },
-  //   { name: "Group B", value: 300 },
-  //   { name: "Group C", value: 300 },
-  //   { name: "Group D", value: 200 },
-  //   { name: "Group E", value: 278 },
-  //   { name: "Group F", value: 189 },
-  // ];
 
   useEffect(() => {
     const id = userinfo.id;
