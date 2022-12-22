@@ -7,7 +7,9 @@ import { PieChart, Pie, Legend, Tooltip } from "recharts";
 
 export default function HomePage() {
   const [userinfo, setUserInfo] = UserAuth();
-  const [account, setAccount] = useState([]);
+  const [newEntry, setNewEntry] = useState(false);
+  const [income, setIncome] = useState([]);
+  const [expense, setExpense] = useState([]);
 
   // const data01 = [
   //   { name: "Group A", value: 400 },
@@ -26,15 +28,33 @@ export default function HomePage() {
         for (let i = 0; i < data.length; i++) {
           data[i].total = data[i].total / 100;
         }
-        setAccount(data);
+        setIncome(data);
+        setNewEntry(false);
       });
-  }, []);
+  }, [newEntry]);
 
-  const data01 = account.map(({ _id: name, total: value }) => ({
+  const incomeData = income.map(({ _id: name, total: value }) => ({
     name,
     value,
   }));
-  console.log(data01);
+
+  useEffect(() => {
+    const id = userinfo.id;
+    fetch(`/api/expense/total/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        for (let i = 0; i < data.length; i++) {
+          data[i].total = data[i].total / 100;
+        }
+        setExpense(data);
+        setNewEntry(false);
+      });
+  }, [newEntry]);
+
+  const expenseData = expense.map(({ _id: name, total: value }) => ({
+    name,
+    value,
+  }));
 
   return (
     <>
@@ -49,7 +69,7 @@ export default function HomePage() {
               <PieChart width={400} height={400}>
                 <Pie
                   dataKey="value"
-                  data={data01}
+                  data={incomeData}
                   cx={200}
                   cy={200}
                   outerRadius={120}
@@ -64,7 +84,7 @@ export default function HomePage() {
               <PieChart width={400} height={400}>
                 <Pie
                   dataKey="value"
-                  data={data01}
+                  data={expenseData}
                   cx={200}
                   cy={200}
                   outerRadius={120}
@@ -75,9 +95,9 @@ export default function HomePage() {
               </PieChart>
             </div>
           </div>
-          <TotalIncomeTable />
-          <br />
-          <AddEntryForm userinfo={userinfo} />
+          {/* <TotalIncomeTable />
+          <br /> */}
+          <AddEntryForm userinfo={userinfo} setNewEntry={setNewEntry} />
         </>
       )}
     </>

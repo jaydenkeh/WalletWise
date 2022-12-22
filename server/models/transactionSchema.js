@@ -5,10 +5,11 @@ const transactionSchema = new Schema(
   {
     accountName: { type: String, required: true, trim: true },
     category: { type: String, required: true, trim: true },
+    type: { type: String, required: true, trim: true },
     amount: { type: Number, required: true, min: "0" },
     description: { type: String, trim: true },
     date: { type: Date, require: true, default: new Date() },
-    userid: { type: String },
+    userid: { type: String, required: true },
   },
   { timestamps: true }
 );

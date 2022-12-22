@@ -1,47 +1,76 @@
+import * as React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { UserAuth } from "../../context/AuthContext";
 import dayjs from "dayjs";
+import Toggle from "../Toggle";
 
-function AddEntryForm({ userinfo }) {
-  // let now = new Date();
-  // let day = now.getDate();
-  // let month = now.getMonth() + 1;
-  // let year = now.getFullYear();
-
-  // month = month < 10 ? "0" + month : month;
-  // day = day < 10 ? "0" + day : day;
-  // let date = year + "-" + month + "-" + day;
+function AddEntryForm({ setEntries, setNewEntry }) {
+  const [userinfo, setUserInfo] = UserAuth();
+  const [account, setAccount] = useState([]);
 
   let date = dayjs().format("YYYY-MM-DD");
 
-  const [transactioninfo, setTransactionInfo] = useState({
+  const [transactionInfo, setTransactionInfo] = useState({
     accountName: "",
-    category: "Salary",
+    type: "income",
+    category: "",
     amount: "",
     description: "",
     date: date,
     userid: userinfo.id,
   });
 
+  const expenseSelection = ["Food", "Transport", "Entertainment", "Others"];
+  const incomeSelection = [
+    "Salary",
+    "Deposit",
+    "Bonus",
+    "Investments",
+    "Others",
+  ];
+
+  const expenses = expenseSelection.map((ele) => {
+    return (
+      <option key={ele} value={ele}>
+        {ele}
+      </option>
+    );
+  });
+  const incomes = incomeSelection.map((ele) => {
+    return (
+      <option key={ele} value={ele}>
+        {ele}
+      </option>
+    );
+  });
+
+  useEffect(() => {
+    fetch("/api/account")
+      .then((response) => response.json())
+      .then((data) => {
+        setAccount(data);
+      });
+  }, []);
+
   function handleChange(event) {
     const value = event.target.value;
     if (event.target.name === "amount") {
       setTransactionInfo({
-        ...transactioninfo,
+        ...transactionInfo,
         [event.target.name]: value * 100,
       });
     } else {
       setTransactionInfo({
-        ...transactioninfo,
+        ...transactionInfo,
         [event.target.name]: value,
       });
     }
   }
 
   const handleSubmit = async () => {
-    const info = transactioninfo;
+    const info = transactionInfo;
     try {
-      const response = await fetch("/api/income", {
+      const response = await fetch("/api/transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,10 +82,11 @@ function AddEntryForm({ userinfo }) {
       }
       const data = await response.json();
 
-      fetch("/api/income/")
+      fetch("/api/transaction/")
         .then((response) => response.json())
         .then((data) => {
           setEntries(data);
+          setNewEntry(true);
         });
 
       // console.log(data);
@@ -71,29 +101,56 @@ function AddEntryForm({ userinfo }) {
       {/* <form onSubmit={handleSubmit}> */}
       <fieldset>
         <legend>New Transaction Entry</legend>
-        <label>Toggle for income/expense</label>
+        <Toggle
+          transactionInfo={transactionInfo}
+          setTransactionInfo={setTransactionInfo}
+        />
         <br />
         <label>
-          Account:
-          {/* change input to drop down with map + account storage in mongo */}
+          {/* Account:
           <input
             required
             name="account"
             type="string"
             defaultValue=""
             onChange={handleChange}
-            //   value={account}
-            // onChange={(event) => setAccount(event.target.value)}
-          />
+          /> */}
+          <label>
+            Account Name:
+            <select
+              name="accountName"
+              id="type-select"
+              defaultValue={"default"}
+              onChange={handleChange}
+            >
+              <option value="default" disabled>
+                Select Account
+              </option>
+              {account?.map((account) => (
+                <option key={account._id} value={account.accountName}>
+                  {account.accountName}
+                </option>
+              ))}
+            </select>
+          </label>
         </label>
         <br />
         <label>
-          Type:
-          <select name="type" id="type-select" onChange={handleChange}>
-            <option value="salary">Salary</option>
+          Category:
+          <select
+            name="category"
+            id="type-select"
+            defaultValue={"default"}
+            onChange={handleChange}
+          >
+            <option value="default" disabled>
+              Select type
+            </option>
+            {transactionInfo?.type === "income" ? incomes : expenses}
+            {/* <option value="salary">Salary</option>
             <option value="bonus">Bonus</option>
             <option value="dividends">Dividends</option>
-            <option value="others">Others</option>
+            <option value="others">Others</option> */}
           </select>
           {/* <input
             name="type"
