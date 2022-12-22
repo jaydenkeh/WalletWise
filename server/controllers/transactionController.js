@@ -87,7 +87,9 @@ router.get("/expense/total/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const transaction = await Transaction.create(req.body);
-    let newamount;
+    res.status(201).json(transaction);
+
+    let updateAmount;
     if (req.body.type === "expense") {
       newamount = req.body.amount * -1;
     } else {
@@ -115,6 +117,7 @@ router.get("/edit/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const transaction = await Transaction.findById(id);
+    transaction.amount = transaction.amount / 100;
     res.status(200).json(transaction);
   } catch (error) {
     res.status(500).json({ error });
@@ -129,6 +132,7 @@ router.put("/:id", async (req, res) => {
       { $set: req.body },
       { new: true }
     );
+    transaction.amount = transaction.amount * 100;
     res.status(200).json(transaction);
   } catch (error) {
     res.status(500).json({ error });

@@ -20,7 +20,7 @@ const incomeSchema = mongoose.Schema(
       min: "0",
     },
     description: { type: String, trim: true },
-    date: { type: Date, require: true, default: new Date() },
+    date: { type: Date, required: true, default: new Date() },
   },
   { timestamps: true }
 );

@@ -81,7 +81,6 @@ function AddEntryForm({ fetchTransaction }) {
       }
       fetchTransaction();
     } catch (error) {
-      //   setMsg("Something went wrong!");
       alert(error);
     }
   };

@@ -11,7 +11,6 @@ function AddAccountForm({ userinfo, setAddNewAccount }) {
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget: input }) => {
-    // const value = event.target.value;
     if (input.name === "accountBalance") {
       setAccountInfo({
         ...accountinfo,
@@ -23,7 +22,6 @@ function AddAccountForm({ userinfo, setAddNewAccount }) {
         [input.name]: input.value,
       });
     }
-    // setAccountInfo({ ...accountinfo, [input.name]: input.value });
   };
 
   const handleSubmit = async (e) => {
