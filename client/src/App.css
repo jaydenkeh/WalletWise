@@ -37,6 +37,7 @@ a {
 
 .home-page {
   display: flex;
+  column-gap: 100px;
 }
 
 .loading-circle {
