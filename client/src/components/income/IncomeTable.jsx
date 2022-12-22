@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 function IncomeTable({ entries, setEntries }) {
   const handleDelete = (id) => {
-    fetch(`/api/income/${id}`, {
+    fetch(`/api/transaction/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -12,7 +12,6 @@ import Paper from "@mui/material/Paper";
 import Masonry from "@mui/lab/Masonry";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
-import Pagination from "@mui/material/Pagination";
 import {
   BarChart,
   Bar,

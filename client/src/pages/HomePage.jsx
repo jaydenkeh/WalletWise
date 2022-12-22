@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { UserAuth } from "../context/AuthContext";
 import NavigationBar from "../components/NavigationBar";
 import TotalIncomeTable from "../components/income/TotalIncomeTable";
 import AddEntryForm from "../components/income/AddEntryForm";
 import { PieChart, Pie, Legend, Tooltip } from "recharts";
+import { UserAuth } from "../context/AuthContext";
 
-export default function HomePage() {
+export default function HomePage({ entries, fetchTransaction }) {
   const [userinfo, setUserInfo] = UserAuth();
-  const [newEntry, setNewEntry] = useState(false);
   const [income, setIncome] = useState([]);
   const [expense, setExpense] = useState([]);
 
@@ -22,16 +21,15 @@ export default function HomePage() {
 
   useEffect(() => {
     const id = userinfo.id;
-    fetch(`/api/income/total/${id}`)
+    fetch(`/api/transaction/income/total/${id}`)
       .then((response) => response.json())
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
           data[i].total = data[i].total / 100;
         }
         setIncome(data);
-        setNewEntry(false);
       });
-  }, [newEntry]);
+  }, [entries]);
 
   const incomeData = income.map(({ _id: name, total: value }) => ({
     name,
@@ -40,16 +38,15 @@ export default function HomePage() {
 
   useEffect(() => {
     const id = userinfo.id;
-    fetch(`/api/expense/total/${id}`)
+    fetch(`/api/transaction/expense/total/${id}`)
       .then((response) => response.json())
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
           data[i].total = data[i].total / 100;
         }
         setExpense(data);
-        setNewEntry(false);
       });
-  }, [newEntry]);
+  }, [entries]);
 
   const expenseData = expense.map(({ _id: name, total: value }) => ({
     name,
@@ -97,7 +94,7 @@ export default function HomePage() {
           </div>
           {/* <TotalIncomeTable />
           <br /> */}
-          <AddEntryForm userinfo={userinfo} setNewEntry={setNewEntry} />
+          <AddEntryForm fetchTransaction={fetchTransaction} />
         </>
       )}
     </>
