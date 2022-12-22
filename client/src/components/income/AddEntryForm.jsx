@@ -1,14 +1,16 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { UserAuth } from "../../context/AuthContext";
 import dayjs from "dayjs";
 import Toggle from "../Toggle";
 
-function AddEntryForm({ userinfo }) {
+function AddEntryForm({ setEntries, setNewEntry }) {
+  const [userinfo, setUserInfo] = UserAuth();
   const [account, setAccount] = useState([]);
 
   let date = dayjs().format("YYYY-MM-DD");
 
-  const [state, setState] = useState({
+  const [transactionInfo, setTransactionInfo] = useState({
     accountName: "",
     type: "income",
     category: "",
@@ -54,21 +56,21 @@ function AddEntryForm({ userinfo }) {
     const value = event.target.value;
     if (event.target.name === "amount") {
       setTransactionInfo({
-        ...transactioninfo,
+        ...transactionInfo,
         [event.target.name]: value * 100,
       });
     } else {
       setTransactionInfo({
-        ...transactioninfo,
+        ...transactionInfo,
         [event.target.name]: value,
       });
     }
   }
 
   const handleSubmit = async () => {
-    const info = transactioninfo;
+    const info = transactionInfo;
     try {
-      const response = await fetch("/api/income", {
+      const response = await fetch("/api/transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,10 +82,11 @@ function AddEntryForm({ userinfo }) {
       }
       const data = await response.json();
 
-      fetch("/api/income/")
+      fetch("/api/transaction/")
         .then((response) => response.json())
         .then((data) => {
           setEntries(data);
+          setNewEntry(true);
         });
 
       // console.log(data);
@@ -98,7 +101,10 @@ function AddEntryForm({ userinfo }) {
       {/* <form onSubmit={handleSubmit}> */}
       <fieldset>
         <legend>New Transaction Entry</legend>
-        <Toggle state={state} setState={setState} />
+        <Toggle
+          transactionInfo={transactionInfo}
+          setTransactionInfo={setTransactionInfo}
+        />
         <br />
         <label>
           {/* Account:
@@ -112,7 +118,7 @@ function AddEntryForm({ userinfo }) {
           <label>
             Account Name:
             <select
-              name="account"
+              name="accountName"
               id="type-select"
               defaultValue={"default"}
               onChange={handleChange}
@@ -130,17 +136,17 @@ function AddEntryForm({ userinfo }) {
         </label>
         <br />
         <label>
-          Type:
+          Category:
           <select
-            name="type"
+            name="category"
             id="type-select"
             defaultValue={"default"}
             onChange={handleChange}
           >
             <option value="default" disabled>
-              Select Category
+              Select type
             </option>
-            {state?.category === "income" ? incomes : expenses}
+            {transactionInfo?.type === "income" ? incomes : expenses}
             {/* <option value="salary">Salary</option>
             <option value="bonus">Bonus</option>
             <option value="dividends">Dividends</option>
