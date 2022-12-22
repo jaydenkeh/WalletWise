@@ -8,6 +8,9 @@ const accountSchema = new Schema(
     accountBalance: { type: Number, required: true, min: "0" },
     currency: { type: String, required: true },
     userid: { type: String },
+    transactions: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Transaction" },
+    ],
   },
   { timestamps: true }
 );
