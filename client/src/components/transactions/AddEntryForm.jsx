@@ -75,6 +75,7 @@ function AddEntryForm({ fetchTransaction }) {
         },
         body: JSON.stringify(info),
       });
+
       if (!response.ok) {
         throw new Error("Network response was not OK");
       }
