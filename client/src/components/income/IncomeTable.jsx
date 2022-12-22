@@ -41,7 +41,7 @@ function IncomeTable({ entries, setEntries }) {
               <td>{dayjs(entries.date).format("DD-MMM-YYYY")}</td>
               {/* https://devexpress.github.io/devextreme-reactive/react/grid/docs/guides/editing-in-popup/ */}
               <td>
-                <Link to={`/income/${entries._id}`}>
+                <Link to={`/transaction/${entries._id}`}>
                   <button>Edit</button>
                 </Link>
               </td>

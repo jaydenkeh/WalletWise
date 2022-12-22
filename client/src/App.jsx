@@ -35,8 +35,7 @@ function App() {
             <HomePage entries={entries} fetchTransaction={fetchTransaction} />
           }
         />
-        <Route path="/income" element={<IncomePage />} />
-        <Route path="/income/:id" element={<EditEntriesPage />} />
+        <Route path="/transaction/:id" element={<EditEntriesPage />} />
         <Route path="/accounts-overview" element={<AccountsPage />} />
         <Route path="/edit-account/:id" element={<EditAccountPage />} />
         <Route
