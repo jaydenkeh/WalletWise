@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "cd server && npm run start"
+    "start": "cd server && npm run start",
+    "build": "cd client && npm run build"
   },
   "workspaces": [
+    "client",
     "server"
   ],
   "repository": {
