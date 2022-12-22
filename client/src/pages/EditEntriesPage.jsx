@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 import Navbar from "../components/NavigationBar";
 import dayjs from "dayjs";
 
@@ -8,6 +9,31 @@ function EditEntriesPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [entries, setEntries] = useState({});
+  const [userinfo, setUserInfo] = UserAuth();
+  const [account, setAccount] = useState([]);
+
+  const expenseSelection = ["Food", "Transport", "Entertainment", "Others"];
+  const incomeSelection = [
+    "Salary",
+    "Deposit",
+    "Bonus",
+    "Investments",
+    "Others",
+  ];
+  const expenses = expenseSelection.map((ele) => {
+    return (
+      <option key={ele} value={ele}>
+        {ele}
+      </option>
+    );
+  });
+  const incomes = incomeSelection.map((ele) => {
+    return (
+      <option key={ele} value={ele}>
+        {ele}
+      </option>
+    );
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -15,7 +41,7 @@ function EditEntriesPage() {
     const formData = new FormData(event.target);
     const info = Object.fromEntries(formData);
 
-    const response = await fetch(`/api/income/${id}`, {
+    const response = await fetch(`/api/transaction/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -23,17 +49,26 @@ function EditEntriesPage() {
       body: JSON.stringify(info),
     });
     await response.json();
-    navigate("/income");
+    navigate("/transactions-history");
   };
 
   useEffect(() => {
-    const fetchHoliday = async () => {
-      const response = await fetch(`/api/income/${id}`);
+    const fetchTransaction = async () => {
+      const response = await fetch(`/api/transaction/edit/${id}`);
       const data = await response.json();
       setEntries(data);
     };
-    fetchHoliday();
+    fetchTransaction();
   }, [id]);
+
+  useEffect(() => {
+    const id = userinfo.id;
+    fetch(`/api/account/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setAccount(data);
+      });
+  }, []);
 
   // useEffect(() => {
   //   fetch("/api/income/")
@@ -48,32 +83,31 @@ function EditEntriesPage() {
         <fieldset>
           <legend>Edit Entry</legend>
           <label>
-            Account:
-            {/* change input to drop down with map + account storage in mongo */}
-            <input
-              required
-              name="account"
-              type="string"
-              defaultValue={entries.account}
-              //   value={account}
-              // onChange={(event) => setAccount(event.target.value)}
-            />
+            Account Name:
+            <select
+              name="accountName"
+              id="type-select"
+              defaultValue={"default"}
+            >
+              <option value="default">{entries.accountName}</option>
+              {account?.map((account) => (
+                <option key={account._id} value={account.accountName}>
+                  {account.accountName}
+                </option>
+              ))}
+            </select>
           </label>
           <br />
           <label>
-            Type:
-            <select name="type" id="type-select" defaultValue={entries.type}>
-              <option value="salary">Salary</option>
-              <option value="bonus">Bonus</option>
-              <option value="dividends">Dividends</option>
-              <option value="others">Others</option>
+            Category:
+            <select
+              name="category"
+              id="type-select"
+              defaultValue={entries.category}
+            >
+              <option value="default">{entries.category}</option>
+              {entries?.type === "income" ? incomes : expenses}
             </select>
-            {/* <input
-            name="type"
-            type="string"
-            defaultValue=""
-            onChange={handleChange}
-          /> */}
           </label>
           <br />
           <label>

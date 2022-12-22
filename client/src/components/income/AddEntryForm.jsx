@@ -45,7 +45,8 @@ function AddEntryForm({ fetchTransaction }) {
   });
 
   useEffect(() => {
-    fetch("/api/account")
+    const id = userinfo.id;
+    fetch(`/api/account/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setAccount(data);

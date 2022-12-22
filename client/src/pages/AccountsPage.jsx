@@ -44,6 +44,21 @@ function AccountsPage() {
     setAddNewAccount(false);
   }, [addnewaccount]);
 
+  useEffect(() => {
+    const fetchUserAccountIncome = async () => {
+      const id = userinfo.id;
+      const response = await fetch(`/api/transaction/account/income/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setUserAccounts(data));
+    };
+    fetchUserAccountIncome();
+  }, []);
+
   const handleDelete = async (id) => {
     const response = await fetch(`/api/account/${id}`, {
       method: "DELETE",

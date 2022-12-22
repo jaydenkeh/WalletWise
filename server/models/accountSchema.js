@@ -12,6 +12,6 @@ const accountSchema = new Schema(
   { timestamps: true }
 );
 
-const Account = mongoose.model("Account", accountSchema);
+const Account = mongoose.model("DaphneAccount", accountSchema);
 
 module.exports = Account;

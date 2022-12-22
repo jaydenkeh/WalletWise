@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { UserAuth } from "./context/AuthContext";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
@@ -12,13 +13,15 @@ import EditAccountPage from "./pages/EditAccountPage";
 
 function App() {
   const [entries, setEntries] = useState([]);
+  const [userinfo, setUserInfo] = UserAuth();
 
   useEffect(() => {
     fetchTransaction();
-  }, []);
+  }, [userinfo]);
 
   const fetchTransaction = () => {
-    fetch("/api/transaction/")
+    const id = userinfo.id;
+    fetch(`/api/transaction/${id}`)
       .then((response) => response.json())
       .then((data) => setEntries(data));
   };
