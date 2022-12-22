@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavigationBar from "../components/NavigationBar";
-import AddEntryForm from "../components/income/AddEntryForm";
+import AddEntryForm from "../components/transactions/AddEntryForm";
 import { PieChart, Pie, Legend, Tooltip, Sector, Cell } from "recharts";
 import { UserAuth } from "../context/AuthContext";
 
@@ -79,8 +79,6 @@ export default function HomePage({ entries, fetchTransaction }) {
         <>
           <div className="home-page">
             <NavigationBar />
-            {/* <br />
-            HomePage */}
             <div className="income-wrapper">
               <h3>Income</h3>
               <PieChart width={400} height={400}>
@@ -93,7 +91,7 @@ export default function HomePage({ entries, fetchTransaction }) {
                   fill="#8884d8"
                   label
                 >
-                  {incomeData.map((entry, index) => (
+                  {incomeData?.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={incomeColours[index % incomeColours.length]}
@@ -116,7 +114,7 @@ export default function HomePage({ entries, fetchTransaction }) {
                   fill="#8884d8"
                   label
                 >
-                  {expenseData.map((entry, index) => (
+                  {expenseData?.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={expenseColours[index % expenseColours.length]}
@@ -128,8 +126,6 @@ export default function HomePage({ entries, fetchTransaction }) {
               </PieChart>
             </div>
           </div>
-          {/* <TotalIncomeTable />
-          <br /> */}
           <AddEntryForm fetchTransaction={fetchTransaction} />
         </>
       )}

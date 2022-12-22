@@ -7,9 +7,7 @@ import Toggle from "../Toggle";
 function AddEntryForm({ fetchTransaction }) {
   const [userinfo, setUserInfo] = UserAuth();
   const [account, setAccount] = useState([]);
-
   let date = dayjs().format("YYYY-MM-DD");
-
   const [transactionInfo, setTransactionInfo] = useState({
     accountName: "",
     type: "income",
@@ -19,7 +17,6 @@ function AddEntryForm({ fetchTransaction }) {
     date: date,
     userid: userinfo.id,
   });
-
   const expenseSelection = ["Food", "Transport", "Entertainment", "Others"];
   const incomeSelection = [
     "Salary",
@@ -45,7 +42,8 @@ function AddEntryForm({ fetchTransaction }) {
   });
 
   useEffect(() => {
-    fetch("/api/account")
+    const id = userinfo.id;
+    fetch(`/api/account/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setAccount(data);
@@ -105,32 +103,22 @@ function AddEntryForm({ fetchTransaction }) {
         />
         <br />
         <label>
-          {/* Account:
-          <input
-            required
-            name="account"
-            type="string"
-            defaultValue=""
+          Account Name:
+          <select
+            name="accountName"
+            id="type-select"
+            defaultValue={"default"}
             onChange={handleChange}
-          /> */}
-          <label>
-            Account Name:
-            <select
-              name="accountName"
-              id="type-select"
-              defaultValue={"default"}
-              onChange={handleChange}
-            >
-              <option value="default" disabled>
-                Select Account
+          >
+            <option value="default" disabled>
+              Select Account
+            </option>
+            {account?.map((account) => (
+              <option key={account._id} value={account.accountName}>
+                {account.accountName}
               </option>
-              {account?.map((account) => (
-                <option key={account._id} value={account.accountName}>
-                  {account.accountName}
-                </option>
-              ))}
-            </select>
-          </label>
+            ))}
+          </select>
         </label>
         <br />
         <label>

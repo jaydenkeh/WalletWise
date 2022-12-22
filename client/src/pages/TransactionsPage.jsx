@@ -1,6 +1,6 @@
 import NavigationBar from "../components/NavigationBar";
-import AddEntryForm from "../components/income/AddEntryForm";
-import TransactionTable from "../components/income/TransactionTable";
+import AddEntryForm from "../components/transactions/AddEntryForm";
+import TransactionTable from "../components/transactions/TransactionTable";
 
 export default function TransactionsPage({
   entries,
