@@ -106,26 +106,6 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Account not found" });
     }
     res.status(201).json(transaction);
-
-    let updateAmount;
-    if (req.body.type === "expense") {
-      updateAmount = req.body.amount * -1;
-    } else {
-      updateAmount = req.body.amount;
-    }
-
-    const updatedAccount = await Account.findOneAndUpdate(
-      { userid: req.body.userid, accountName: req.body.accountName },
-      {
-        $inc: {
-          accountBalance: updateAmount,
-        },
-      },
-      { new: true }
-    );
-    if (!updatedAccount) {
-      return res.status(400), json({ error: "Account not found" });
-    }
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -135,7 +115,6 @@ router.get("/edit/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const transaction = await Transaction.findById(id);
-    // transaction.amount = transaction.amount / 100;
     res.status(200).json(transaction);
   } catch (error) {
     res.status(500).json({ error });
