@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from "react";
 import NavigationBar from "../components/NavigationBar";
 import AddEntryForm from "../components/income/AddEntryForm";
-import IncomeTable from "../components/income/IncomeTable";
+import TransactionTable from "../components/income/TransactionTable";
 
-export default function TransactionsPage() {
-  const [entries, setEntries] = useState([]);
-
-  useEffect(() => {
-    fetch("/api/income/")
-      .then((response) => response.json())
-      .then((data) => setEntries(data));
-  }, []);
-
+export default function TransactionsPage({
+  entries,
+  fetchTransaction,
+  setEntries,
+}) {
   return (
     <>
       <NavigationBar />
       <div>TransactionsPage</div>
-      <AddEntryForm entries={entries} setEntries={setEntries} />
-      <IncomeTable entries={entries} setEntries={setEntries} />
+      <AddEntryForm fetchTransaction={fetchTransaction} />
+      <TransactionTable entries={entries} setEntries={setEntries} />
     </>
   );
 }

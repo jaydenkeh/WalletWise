@@ -12,7 +12,6 @@ import Paper from "@mui/material/Paper";
 import Masonry from "@mui/lab/Masonry";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
-import Pagination from "@mui/material/Pagination";
 import {
   BarChart,
   Bar,
@@ -30,9 +29,18 @@ function AccountsPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/api/account/")
-      .then((response) => response.json())
-      .then((data) => setUserAccounts(data));
+    const fetchUserAccounts = async () => {
+      const id = userinfo.id;
+      const response = await fetch(`/api/account/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setUserAccounts(data));
+    };
+    fetchUserAccounts();
     setAddNewAccount(false);
   }, [addnewaccount]);
 
@@ -57,9 +65,20 @@ function AccountsPage() {
     color: theme.palette.text.secondary,
   }));
 
+  // useEffect(() => {
+  //   fetch(`/api/transaction//total/`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       for (let i = 0; i < data.length; i++) {
+  //         data[i].total = data[i].total / 100;
+  //       }
+  //       setTotal(data);
+  //     });
+  // }, []);
+
   const data = [
     {
-      name: "Page A",
+      name: "Page A", //* (MMM/YYYY)
       Income: 4000,
       Expenses: 2400,
     },
@@ -90,7 +109,6 @@ function AccountsPage() {
     },
   ];
 
-  console.log(useraccounts);
   return (
     <>
       <NavigationBar />
@@ -121,7 +139,7 @@ function AccountsPage() {
       <div className="all-accounts-container">
         <Box sx={{ minWidth: 660, minHeight: 250 }}>
           <Masonry columns={5} spacing={2}>
-            {useraccounts.map((account, index) => (
+            {useraccounts?.map((account, index) => (
               <Item key={index} sx={{ height: 210 }}>
                 <p>
                   <b>{account.accountType}</b>

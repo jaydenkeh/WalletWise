@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
-function IncomeTable({ entries, setEntries }) {
+function TransactionTable({ entries, setEntries }) {
   const handleDelete = (id) => {
-    fetch(`/api/income/${id}`, {
+    fetch(`/api/transaction/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +40,7 @@ function IncomeTable({ entries, setEntries }) {
               <td>{dayjs(entries.date).format("DD-MMM-YYYY")}</td>
               {/* https://devexpress.github.io/devextreme-reactive/react/grid/docs/guides/editing-in-popup/ */}
               <td>
-                <Link to={`/income/${entries._id}`}>
+                <Link to={`/transaction/${entries._id}`}>
                   <button>Edit</button>
                 </Link>
               </td>
@@ -58,4 +57,4 @@ function IncomeTable({ entries, setEntries }) {
   );
 }
 
-export default IncomeTable;
+export default TransactionTable;

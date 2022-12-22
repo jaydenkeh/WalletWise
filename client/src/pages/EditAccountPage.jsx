@@ -9,7 +9,6 @@ export default function EditAccountPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target);
     const formData = new FormData(e.target);
     const info = Object.fromEntries(formData);
 

@@ -4,7 +4,7 @@ import { UserAuth } from "../../context/AuthContext";
 import dayjs from "dayjs";
 import Toggle from "../Toggle";
 
-function AddEntryForm({ setEntries, setNewEntry }) {
+function AddEntryForm({ fetchTransaction }) {
   const [userinfo, setUserInfo] = UserAuth();
   const [account, setAccount] = useState([]);
 
@@ -80,16 +80,15 @@ function AddEntryForm({ setEntries, setNewEntry }) {
       if (!response.ok) {
         throw new Error("Network response was not OK");
       }
-      const data = await response.json();
+      fetchTransaction();
+      // const data = await response.json();
 
-      fetch("/api/transaction/")
-        .then((response) => response.json())
-        .then((data) => {
-          setEntries(data);
-          setNewEntry(true);
-        });
-
-      // console.log(data);
+      // fetch("/api/transaction/")
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     setEntries(data);
+      //     setNewEntry(true);
+      //   });
     } catch (error) {
       //   setMsg("Something went wrong!");
       alert(error);
@@ -98,7 +97,6 @@ function AddEntryForm({ setEntries, setNewEntry }) {
 
   return (
     <>
-      {/* <form onSubmit={handleSubmit}> */}
       <fieldset>
         <legend>New Transaction Entry</legend>
         <Toggle
@@ -194,8 +192,6 @@ function AddEntryForm({ setEntries, setNewEntry }) {
         </label>
       </fieldset>
       <button onClick={handleSubmit}>Add Entry</button>
-      {/* <button type="reset">Reset</button>
-      </form> */}
     </>
   );
 }
