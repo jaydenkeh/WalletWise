@@ -23,7 +23,6 @@ export const AuthContextProvider = ({ children }) => {
           "http://localhost:3000/api/login/me",
           config
         );
-        console.log(response.data);
         if (response.data && response.data.id) {
         }
         setUserInfo({

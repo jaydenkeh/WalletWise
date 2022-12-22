@@ -56,39 +56,6 @@ function AccountsPage({ entries }) {
     color: theme.palette.text.secondary,
   }));
 
-  const data = [
-    {
-      name: "Page A", //* (MMM/YYYY)
-      Income: 4000,
-      Expenses: 2400,
-    },
-    {
-      name: "Page B",
-      Income: 3000,
-      Expenses: 1398,
-    },
-    {
-      name: "Page C",
-      Income: 2000,
-      Expenses: 9800,
-    },
-    {
-      name: "Page D",
-      Income: 2780,
-      Expenses: 3908,
-    },
-    {
-      name: "Page E",
-      Income: 1890,
-      Expenses: 4800,
-    },
-    {
-      name: "Page F",
-      Income: 2390,
-      Expenses: 3800,
-    },
-  ];
-
   return (
     <>
       <NavigationBar />

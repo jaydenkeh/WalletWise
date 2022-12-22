@@ -80,14 +80,6 @@ function AddEntryForm({ fetchTransaction }) {
         throw new Error("Network response was not OK");
       }
       fetchTransaction();
-      // const data = await response.json();
-
-      // fetch("/api/transaction/")
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     setEntries(data);
-      //     setNewEntry(true);
-      //   });
     } catch (error) {
       //   setMsg("Something went wrong!");
       alert(error);
@@ -134,17 +126,7 @@ function AddEntryForm({ fetchTransaction }) {
               Select type
             </option>
             {transactionInfo?.type === "income" ? incomes : expenses}
-            {/* <option value="salary">Salary</option>
-            <option value="bonus">Bonus</option>
-            <option value="dividends">Dividends</option>
-            <option value="others">Others</option> */}
           </select>
-          {/* <input
-            name="type"
-            type="string"
-            defaultValue=""
-            onChange={handleChange}
-          /> */}
         </label>
         <br />
         <label>

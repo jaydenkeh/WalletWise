@@ -87,7 +87,24 @@ router.get("/expense/total/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const transaction = await Transaction.create(req.body);
-    console.log(transaction);
+    let newamount;
+    if (req.body.type === "expense") {
+      newamount = req.body.amount * -1;
+    } else {
+      newamount = req.body.amount;
+    }
+    const updatedAccount = await Account.findOneAndUpdate(
+      { userid: req.body.userid, accountName: req.body.accountName },
+      {
+        $inc: {
+          accountBalance: newamount,
+        },
+      },
+      { new: true }
+    );
+    if (!updatedAccount) {
+      return res.status(400).json({ error: "Account not found" });
+    }
     res.status(201).json(transaction);
 
     let updateAmount;
@@ -172,35 +189,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error });
   }
 });
-
-// //TODO a route that filters the data by income/expenses and by period (MMM/YYYY)
-// router.get("/total", async (req, res) => {
-//   try {
-//     const income = Transaction.aggregate(
-//       [
-//         { $match: { $and: [{ userid: id }, { type: "income" }] } },
-//         {
-//           $group: {
-//             _id: "$category",
-//             total: {
-//               $sum: "$amount",
-//             },
-//           },
-//         },
-//       ],
-//       function (err, result) {
-//         if (err) {
-//           res.json(err);
-//         } else {
-//           res.status(200).json(result);
-//         }
-//       }
-//     );
-//   } catch (error) {
-//     res.status(500).json({ error });
-//   }
-// });
-// //
 
 //get all income for userid and accountname
 router.get("/account/income/:id", async (req, res) => {
